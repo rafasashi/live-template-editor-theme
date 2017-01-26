@@ -109,6 +109,7 @@ aside ul {
 	z-index:10000;
 	position: relative;
 	width: 100%;
+	border: none !important;
 }
 .boxedlayout {
     max-width: 100%;
