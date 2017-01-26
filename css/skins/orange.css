@@ -1,0 +1,32 @@
+a,.colortext,code,.infoareaicon,.fontawesome-icon.circle-white,.wowmetaposts span a:hover,h1.widget-title,.testimonial-name,.mainthemetextcolor,.primarycolor,footer#colophon a:hover,.icon-box-top h1:hover,.icon-box-top.active a h1 {
+	color:#F86D18;
+}
+span.htitle, .captionicons,.colorarea,.mainthemebgcolor,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.icon-box-top i:hover,.grey-box-icon:hover .fontawesome-icon.circle-white,.grey-box-icon.active .fontawesome-icon.circle-white,.active i.fontawesome-icon,.widget_tag_cloud a,.tagcloud a,#back-top a:hover span,.add-on,#commentform input#submit,.featured .wow-pricing-per,.featured .wow-pricing-cost,.featured .wow-pricing-button .wow-button,.buttoncolor,ul.social-icons li,#skill i,.btn-primary,.pagination .current,.ui-tabs-active,.totop,.totop:hover,.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.open .dropdown-toggle.btn-primary {
+	background-color:#F86D18;
+}
+#filter ul li .selected {
+	background-color:#F86D18 !Important;
+}
+#search a,#search input.search-submit {
+	background:#F86D18 url(../../img/part-btn-search.png) no-repeat center center;
+}
+.wow-pricing-table>div.featured,.wow-accordion .wow-accordion-trigger.ui-state-active {
+	border-top:#F86D18 3px solid;
+}
+.panel,.panel1 {
+	border-left:8px solid #F86D18;
+}
+::selection {
+	background:#F86D18;
+	color:#fff;
+	text-shadow:none;
+}
+.boxedcontent {
+	border-top:5px solid #F86D18;
+}
+.navbar-collapse .nav>li>a:hover,.navbar-nav>.active {
+	background-color: #F86D18;
+}
+footer#colophon h1 {
+	border-bottom:1px solid #F86D18;
+}
