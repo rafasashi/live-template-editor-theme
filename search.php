@@ -10,7 +10,7 @@ get_header();
 	<div class="row">
 		<div class="col-md-8">
 			<h1 class="pgheadertitle animated fadeInLeft"><?php printf( __( 'Search Results for: %s', 'ltple-theme' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
-			<div class="headerdivider"></div>
+			
 				<?php if ( have_posts() ) : ?>
                                                    <!--- delete the style values or change none to block--->
 					<div class="row tiles blogindex">

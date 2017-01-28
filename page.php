@@ -5,19 +5,15 @@
 
 get_header(); ?>
 
-<!--
 <div class="container">
 	<div class="row">
+	
+		<!--
 		<div class="col-md-12">
-			<h1 class="pgheadertitle animated fadeInLeft"><?php the_title(); ?></h1>
-		<div class="headerdivider"></div>
+			 <h1 class="pgheadertitle animated fadeInLeft"><?php the_title(); ?></h1>
 		</div>
-	</div>
-</div>
--->
-
-<div class="container">
-	<div class="row">
+		-->
+	
 		<div class="col-md-12">			
 			<main id="main" class="site-main" role="main">
 				<?php while ( have_posts() ) : the_post(); ?>

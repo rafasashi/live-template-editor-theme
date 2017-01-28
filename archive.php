@@ -66,7 +66,7 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 				printf( '<div class="taxonomy-description">%s</div>', $term_description );
 			endif;
 		?>
-		<div class="headerdivider"></div>
+		
 		</div>
 	</div>
 </div>

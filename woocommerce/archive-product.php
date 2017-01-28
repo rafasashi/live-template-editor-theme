@@ -23,7 +23,7 @@ get_header( 'shop' ); ?>
 					<?php woocommerce_page_title(); ?>
 				<?php endif; ?>	
 			</h1>
-		<div class="headerdivider"></div>
+		
 		</div>
 	</div>
 </div>
