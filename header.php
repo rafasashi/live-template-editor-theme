@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="container">
-		<nav class="navbar" role="navigation" style="background-color:#182f42;z-index:9999;">
+		<nav class="navbar" role="navigation" style="background-color:#182f42;z-index:1040;">
 			<?php
 				if ( has_nav_menu( 'header' ) ) {
 				  wp_nav_menu( array(
