@@ -13,9 +13,7 @@ span.htitle, .captionicons,.colorarea,.mainthemebgcolor,.dropdown-menu>li>a:hove
 .wow-pricing-table>div.featured,.wow-accordion .wow-accordion-trigger.ui-state-active {
 	border-top:#F86D18 3px solid;
 }
-.panel,.panel1 {
-	border-left:8px solid #F86D18;
-}
+
 ::selection {
 	background:#F86D18;
 	color:#fff;
