@@ -401,6 +401,15 @@ a.navbar-brand img {
 	opacity: 0.1;
 }
 /*==============================================* SECTIONS *===============================================*/
+
+.post h1, .page h1, .archive  h1 {
+	
+	padding: 30px 30px;
+	font-weight: bold;
+	background: rgba(158, 158, 158, 0.24);
+	color: rgb(138, 206, 236);
+}
+
 .whites {
 	background:#fff;
 	padding:30px 0;
@@ -1569,6 +1578,7 @@ span.htitle {
 	padding:20px 20px 20px 20px;
 	word-wrap:break-word;
 	border:1px solid #eee;
+	width:100%;
 }
 .wrapinneritem .entry-meta {
 	font-size:12px;
@@ -2831,4 +2841,649 @@ ul.products a.button {
 .woocommerce .woocommerce-ordering select {
 	border-radius:0;
 	border: 2px solid #ddd;
+}
+
+/*==============================================* CUSTOM *===============================================*/
+
+@import url('https://fonts.googleapis.com/css?family=Oswald|Rokkitt');
+body {
+	background-image: none;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: top center;
+	background-attachment: fixed;
+	background-color: #000000;
+}
+
+.xcr::-webkit-scrollbar {
+	width: 8px;
+}
+
+.xcr::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.xcr::-webkit-scrollbar-thumb {
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: #333333;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+.xcr::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(204,0,0,.4);
+	border: 1px solid #ccc;
+}
+
+/*** Support Tips ***/
+.tipbutton a:link,.tipbutton a:visited {
+	display: block;
+	padding: 1px 12px;
+	border-radius: 50%;
+	height: auto;
+	text-align: center;
+	position: fixed;
+	top: 140px;
+	left: 3px;
+	background: #fff;
+	border: 1px solid #ccc;
+	color: #888;
+	font-size: 20px;
+}
+
+.tipbutton a:hover {
+	background: #000;
+}
+
+.tipbutton a:before {
+	content: '?';
+	font-weight: bold;
+}
+
+.tipwrapper {
+}
+
+.tipwrapper #tips {
+	display: block;
+	text-align: left;
+	color: #666;
+	text-decoration: none;
+	position: fixed;
+	top: 7%;
+	left: -970px;
+	width: 450px;
+	height: 70%;
+	z-index: 999999;
+	padding: 10px;
+	transition: linear .7s;
+	-moz-transition: linear .7s;
+	-ms-transition: linear .7s;
+	-o-transition: linear .7s;
+	-webkit-transition: linear .7s;
+	background: rgb(252,255,244);
+	background: -moz-linear-gradient(top,rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(179,190,173,1) 100%);
+	background: -webkit-linear-gradient(top,rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(179,190,173,1) 100%);
+	background: linear-gradient(to bottom,rgba(252,255,244,1) 0%,rgba(223,229,215,1) 40%,rgba(179,190,173,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4',endColorstr='#b3bead',GradientType=0);
+	border-radius: 0 0 5px 0;
+	-webkit-border-radius: 0 0 5px 0;
+	box-shadow: 0 2px 3px #000;
+	-ms-box-shadow: 0 2px 3px #000;
+	-moz-box-shadow: 0 2px 3px #000;
+	-o-box-shadow: 0 2px 3px #000;
+	-webkit-box-shadow: 0 2px 3px #000;
+}
+
+.tipwrapper #tips:target {
+	display: block;
+	position: fixed;
+	left: 0;
+	width: 450px;
+	height: 70%;
+	z-index: 999999;
+}
+
+#tips:target > .noshow {
+	float: right;
+	margin-bottom: 30px;
+}
+
+.noshow {
+	display: inline-block;
+	position: relative;
+	top: -10px;
+	right: -10px;
+	text-align: center;
+	font-size: 23px;
+	z-index: 1000000;
+	width: 30px;
+	height: auto;
+	background: #066;
+	overflow: hidden;
+	transition: all .5s;
+	-webkit-transition: all .5s;
+	text-decoration: none;
+}
+
+a.noshow::before {
+	content: '\2630';
+	color: #fff;
+	display: block;
+	width: 30px;
+	height: auto;
+}
+
+a.noshow:hover::before {
+	content: '\2716';
+	color: #fff;
+	display: block;
+	width: 30px;
+	height: auto;
+}
+
+[class*='tip-'] {
+	display: block;
+	width: 90%;
+	margin: 10px auto;
+	padding: 20px;
+	font-size: 15px;
+	background: #fff;
+	color: #333;
+	box-shadow: 3px 3px 6px #999;
+}
+
+[class*='tip-'] p {
+	display: block;
+	margin: 0 auto;
+}
+
+.nexus {
+	display: block;
+	padding: 3px 8px;
+	background: #F63;
+	color: #fff;
+	font-weight: bold;
+	font-size: 17px;
+	margin-bottom: 6px;
+}
+
+.showmore {
+	display: block;
+	text-align: right;
+	font-size: 14px;
+	margin-top: 12px;
+}
+
+.showmore a:link,.showmore a:visited {
+	padding: 3px 11px;
+	text-align: center;
+	color: #fff;
+	text-decoration: none;
+	background: #333;
+}
+
+.showmore a:hover {
+	color: #fff;
+	text-decoration: none;
+	background: #000;
+}
+
+.heislide {
+	display: block;
+	overflow: auto;
+	height: 90%;
+}
+
+.refresh {
+	display: block;
+	text-align: center;
+	padding-top: 20px;
+	border-top: 1px solid #ccc;
+}
+
+.refresh a {
+	padding: 6px 22px;
+	background: #2A8EFF;
+	text-decoration: none;
+	color: #fff;
+}
+
+.refresh a:visited {
+	background: #2A8EFF;
+	text-decoration: none;
+	color: #fff;
+}
+
+.refresh a:hover {
+	background: #000;
+	text-decoration: none;
+	color: #fff;
+}
+
+/** Footer s social icons - bigger ***/
+.widget_wpcom_social_media_icons_widget .genericon {
+	font-family: Genericons;
+	font-size: 20px;
+}
+
+/* custom css unification between forum, blog, and editor */
+.pgheadertitle {
+	display: none;
+}
+
+.wpforo-main,.wpforo-footer {
+	padding: 15px 0;
+}
+
+#wpforo-wrap {
+	font-size: 13px;
+	width: 100%;
+	padding: 0;
+	margin: -40px 0 0;
+}
+
+/*** The subscribe button from jetpack looks like shit ***/
+#subscribe-submit input[type=reset], #subscribe-submit input[type=submit] {
+	-webkit-appearance: button;
+	padding: 4px 12px;
+	cursor: pointer;
+	background-color: #f86d18;
+	color: #f1f1f1;
+}
+
+#subscribe-submit input[type=reset]:hover, #subscribe-submit input[type=submit]:hover {
+	-webkit-appearance: button;
+	color: #ffffff;
+	background-color: #000000;
+}
+
+#subscribe-email input {
+	width: 95%;
+	padding: 3px 8px;
+}
+
+/*** Blog post thumbnail 
+.entry-thumbnail, .entry-thumbnail img {
+	display: block;
+	width: 100%;
+	height: auto;
+	text-align: center;
+}
+
+a.entry-thumbnail {
+	display: block;
+	width: 100%;
+	height: auto;
+	text-align: center;
+}
+
+.blogindex .wrapinneritem .entry-thumbnail {
+	display: block;
+	width: 100%;
+	height: auto;
+	text-align: center;
+}
+***/
+
+.nav {
+}
+
+/*** Removes the tags from article -- blog meta, previous next styling ***/
+footer.entry-meta,.wowmetaposts {
+	display: none;
+}
+
+.post-navigation .nav-previous {
+	float: left;
+}
+
+.post-navigation .nav-next {
+	float: right;
+}
+
+.nav-next a:link,.nav-next a:visited,.nav-previous a:link,.nav-previous a:visited {
+	padding: 6px 14px;
+	color: #fff;
+	font-style: normal;
+	background-color: #f86d18;
+	text-decoration: none;
+}
+
+.nav-next a:hover,.nav-previous a:hover {
+	background-color: #222222;
+	color: #f86d18;
+}
+
+/*** custom main appearence ***/
+/*for the modal to be on top*/
+.header {
+	display: none;
+}
+
+.headerdivider {
+	margin-bottom: 18px;
+}
+
+.boxedcontent {
+	z-index: auto;
+}
+
+.boxedlayout {
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.navbar {
+	margin-bottom:0px;
+}
+
+.tinynav {
+	height:50px;
+}
+
+.container {
+	width: 100%;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.menushadow {
+	height: 0;
+	margin-bottom: 0;
+}
+
+.dropdown-menu {
+	left: auto;
+}
+
+/*** Plans post standalone***/
+[class*='edplan-'] {
+	width: 80%;
+	height: auto;
+	padding: 20px;
+	font-size: 20px;
+	margin: 20px auto;
+}
+
+[class*='edplan-'] div {
+	display: block;
+	margin: 0 auto;
+	line-height: normal;
+	padding: 7px 17px;
+	border-bottom: 1px solid #cccccc;
+}
+
+.eplan-feat {
+	position: relative;
+	font-size: 17px;
+	margin: 20px auto 4px;
+	border: 1px solid #cccccc;
+	background: rgb(255,255,255);
+	background: -moz-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+	background: -webkit-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+	background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#e5e5e5',GradientType=0);
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 0 1px 2px #999999;
+	-webkit-box-shadow: 0 1px 2px #999999;
+}
+
+[class*='edplan-'] i {
+	color: #0085ba;
+	margin-right: 8px;
+}
+
+.eplan-feat .pheads {
+	color: #0085BA;
+	text-shadow: 0 1px 3px #fff;
+	border-bottom: 1px solid #cccccc;
+}
+
+/*** the button shown on the standalone plan post ***/
+#plan_form {
+	width: 70%;
+	margin: 20px auto 14px;
+	padding: 10px;
+	text-align: center;
+	font-size: 19px;
+}
+
+#plan_storage {
+	font-size: 19px;
+	color: #3b8faa;
+}
+
+a.totop {
+	background-color: #3b8faa;
+}
+
+a:hover.totop {
+	background-color: #F86D18;
+	opacity: 1;
+}
+
+/*** Footer fix ***/
+.col-md-4, .footer-widget {
+	padding: 4px 22px;
+}
+
+.footerbottom {
+	padding-left: 12px;
+}
+
+.smallspacetop,.footermenu {
+	padding-right: 12px;
+}
+
+/*** Blog Fix ***/
+.blogindex .inneritem {
+	padding: 0;
+	border: 0;
+	margin: 0 auto;
+}
+
+.blogindex .wrapinneritem {
+	padding: 15px;
+	word-wrap: break-word;
+	border: 1px solid #eee;
+	float: left;
+	margin: 0 auto;
+}
+
+.col-md-8 {
+	width: 88.66666667%;
+	padding: 20px;
+	margin-left: 2px;
+}
+
+/*** Graphic Gallery background color for header elements***/
+.bg-black {
+	display: block;
+	width: 100%;
+	height: auto;
+	padding: 20px;
+	background-color: #000000;
+	background-image: url(//dexdan.files.wordpress.com/2013/08/bg1_black.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+}
+
+.bg-color {
+	display: block;
+	width: 100%;
+	height: auto;
+	padding: 20px;
+	background-color: #000000;
+	background-image: url(//dexdan.files.wordpress.com/2016/09/transparent_bg.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+}
+
+.bg-light {
+	display: block;
+	width: 100%;
+	height: auto;
+	padding: 20px;
+	background-color: #ffffff;
+	background-image: url(//editbio.files.wordpress.com/2015/05/bg1.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+}
+
+.bg-black img,.bg-light img,.bg-color img {
+	display: block;
+	width: 100%;
+	height: auto;
+	margin: 5px auto -2px;
+}
+
+.bg-black code,.bg-light code,.bg-color code {
+	padding: 3px 6px;
+	font-size: 15px;
+}
+
+.bg-default {
+	display: block;
+	width: 90%;
+	height: auto;
+	margin: 10px auto;
+	padding: 20px;
+}
+
+#wpforo-wrap .wpforo-content {
+	width: 99%;
+	float: left;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/*** Footer first widget section About ***/
+.logo_footer {
+	display: block;
+	width: 97%;
+	height: 230px;
+	overflow: hidden;
+	transition: linear .7s;
+	-moz-transition: linear .7s;
+	-ms-transition: linear .7s;
+	-o-transition: linear .7s;
+	-webkit-transition: linear .7s;
+}
+
+.logo_footer img {
+	display: block;
+	width: 95%;
+	height: auto;
+	margin: 10px auto;
+	transition: linear .7s;
+	-moz-transition: linear .7s;
+	-ms-transition: linear .7s;
+	-o-transition: linear .7s;
+	-webkit-transition: linear .7s;
+}
+
+.logo_footer:hover img {
+	display: block;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	margin: 0 auto;
+	opacity: 0;
+}
+
+.abt {
+	margin: 0 auto;
+	display: block;
+	position: relative;
+	transition: linear .7s;
+	-moz-transition: linear .7s;
+	-ms-transition: linear .7s;
+	-o-transition: linear .7s;
+	-webkit-transition: linear .7s;
+	width: 99%;
+	height: 230px;
+	overflow: hidden;
+	opacity: 0;
+}
+
+.logo_footer:hover .abt {
+	display: block;
+	width: 99%;
+	height: 230px;
+	position: relative;
+	margin: 0 auto;
+	opacity: 1;
+}
+
+.easy {
+	padding: 3px 12px;
+	border: 1px solid #ccc;
+	text-align: center;}
+
+.orange {
+	background-color: #F86D18;
+	color: #fff;
+	text-shadow: 0 -1px 0 #333;
+}
+
+/***The content wrapper fix***/
+.corp {
+	display: block;
+	width: 98%;
+	height: auto;
+	padding: 20px;
+	margin: 10px auto 20px;
+	font-family: 'Rokkitt', serif;
+	font-size:16px;
+}
+.corp h2{font-family: 'Oswald', sans-serif;}
+/*** Strange blog fix ***/
+#secondary.widget-area{display:none;}
+
+/*** Footer Logos ***/
+
+#logos-wrapper{display:block;width:96%;padding:10px;text-align:center;margin:30px auto 44px auto;}
+[class*='logos-'] {display:inline-block;height:60px;float:left;position:relative;margin:12px 3px 3px 3px}
+[class*='logos-'] img{display:block;opacity:0.3;-webkit-filter: grayscale(100%); 
+ filter: grayscale(100%);transition:all .3s;-webkit-transition:all .3s;-mox-transition:all .3s;-o-transition:all .3s;-ms-transition:all .3s;}
+[class*='logos-'] img:hover{opacity:1;-webkit-filter: grayscale(0); 
+ filter: grayscale(0);position:relative;}
+/*** Forum menu on top of website***/
+#wpforo-wrap {
+    font-size: 15px;
+    width: 100%;
+    padding: 0;
+    margin: -50px 0 0;
+	padding: 0 20px;
+}
+.wpfcl-1{color:#ce125a}
+
+#wpforo-wrap .wpforo-post .wpf-left .wpforo-membertoggle i {display:none!important;
+    color: #3f7796;
+}
+
+p.wpf-stat-other span:nth-child(2){display:none!important;}
+
+/** documentation **/
+
+.wedocs-single-wrap .wedocs-sidebar h3.widget-title, .wedocs-sidebar h3 {
+
+	padding: 15px !important;
+	font-weight: bold;
+	background: rgba(158, 158, 158, 0.24);
+	color: rgb(138, 206, 236);	
+}
+
+.wedocs-single-wrap .wedocs-single-content{
+	
+	padding: 20px 25px !important;
 }
