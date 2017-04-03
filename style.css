@@ -2145,6 +2145,8 @@ ul.footermenu li {
 .wraptotop {
 	margin-top:-85px;
 	padding-bottom: 25px;
+	position: absolute;
+    width: 100%;
 }
 /* =========================================================== */
 /* OTHER /* ============================================================== */
@@ -3474,6 +3476,32 @@ a:hover.totop {
 p.wpf-stat-other span:nth-child(2){display:none!important;}
 
 /** documentation **/
+
+.wedocs-shortcode-wrap{
+	
+	margin-top:10px;
+}
+
+.wedocs-single-wrap{
+	
+	background:#eee !important;
+}
+
+.wedocs-single-content{
+	
+	background:#fff !important;
+}
+
+.wedocs-shortcode-wrap ul.wedocs-docs-list li.wedocs-docs-single h3 {
+	
+	border-bottom: 1px solid rgb(202, 202, 202);
+    font-size: 20px;
+    font-weight: bold;
+    background: rgb(242, 242, 242);
+    padding: 15px 20px;
+    margin: 0;
+	line-height: normal;
+}
 
 .wedocs-single-wrap .wedocs-sidebar h3.widget-title, .wedocs-sidebar h3 {
 

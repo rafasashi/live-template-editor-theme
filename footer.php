@@ -8,10 +8,9 @@
 ?>
 <!-- FOOTER BEGIN
 	================================================== -->
-	<div class="beforefooter text-center"></div>
-	<footer id="colophon" class="site-footer " role="contentinfo">
+	<footer id="colophon" role="contentinfo">
 	<div class="text-center wraptotop">
-		<a class="totop"><i class="fa fa-chevron-up"></i></a>
+		<a class="totop" style="border:none;"><i class="fa fa-chevron-up"></i></a>
 	</div>
 		<div class="footer">
 			<div class="container">
