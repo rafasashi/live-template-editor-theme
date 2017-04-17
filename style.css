@@ -3482,6 +3482,11 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
 	margin-top:10px;
 }
 
+.wedocs-single-wrap .wedocs-single-content{
+	
+	padding: 20px 25px !important;
+}
+
 .wedocs-single-wrap{
 	
 	background:#eee !important;
@@ -3490,6 +3495,11 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
 .wedocs-single-content{
 	
 	background:#fff !important;
+}
+
+.wedocs-single-content h1 {
+	
+	margin-bottom:30px;
 }
 
 .wedocs-shortcode-wrap ul.wedocs-docs-list li.wedocs-docs-single h3 {
@@ -3511,7 +3521,18 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
 	color: rgb(138, 206, 236);	
 }
 
-.wedocs-single-wrap .wedocs-single-content{
+.wedocs-single-content .tags-links {
 	
-	padding: 20px 25px !important;
+	color: #fff;
+}
+
+.wedocs-single-content .tags-links a {
+	
+    color: #fff;
+    padding: 1px 8px;
+    border: 1px solid rgb(255, 149, 116);
+    background: rgb(255, 181, 158);
+    margin: 15px 5px 0 5px;
+    display: inline-block;
+	
 }
