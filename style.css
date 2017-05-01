@@ -2433,7 +2433,7 @@ a.text-logo {color:#333;}
 				width:100%;
 				color:#fff;
 				height:44px;
-				padding-left:30px;
+				padding-left:100px !important;
 	}
 	#main-menu {
 				display:none;

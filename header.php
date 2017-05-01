@@ -65,7 +65,7 @@
 							$profile_url = esc_url( home_url( '/login/' ) );
 						}
 						
-						echo'<span style="background-color:#f86d18;width:50px;height:50px;display:inline-block;">';
+						echo'<span style="width:49px;height:50px;display:inline-block;">';
 							
 							echo'<a href="'.$profile_url.'" title="Edit my profile"><img style="padding:8px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></a>';
 							
