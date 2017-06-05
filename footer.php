@@ -8,34 +8,28 @@
 ?>
 <!-- FOOTER BEGIN
 	================================================== -->
+	
 	<footer id="colophon" role="contentinfo">
-	<div class="text-center wraptotop">
-		<a class="totop" style="border:none;"><i class="fa fa-chevron-up"></i></a>
-	</div>
-		<div class="footer">
-			<div class="container">
-				<div class="row">
-					<?php if ( is_active_sidebar( 'footerwidgets' ) ) : ?>
-					<?php dynamic_sidebar( 'footerwidgets' ); ?>
-					<?php else : ?>
-					<!-- This content shows up if there are no widgets defined in the backend. -->
-					<div class="col-md-4">
-					<!-- This content shows up if there are no widgets defined in the backend. -->
-					<div class="help">
-						<p>
-							<?php _e("Hello, activate some Widgets!", "ltple-theme"); ?>
-							<?php if(current_user_can('edit_theme_options')) : ?>
-							<a href="<?php echo admin_url('widgets.php')?>" class="add-widget"><?php _e("Add Widget", "ltple-theme"); ?></a>
-							<?php endif ?>
-						</p>
-					</div>
-					</div>
-					<?php endif; ?>
-				</div>
-			</div>
+	
+		<div class="text-center wraptotop">
+			<a class="totop" style="border:none;"><i class="fa fa-chevron-up"></i></a>
 		</div>
 
-
+		<?php 
+		
+			if ( is_active_sidebar( 'footerwidgets' ) ) {
+				
+				echo'<div class="footer">';
+					echo'<div class="container">';
+						echo'<div class="row">';
+					
+							dynamic_sidebar( 'footerwidgets' );
+							
+						echo'</div>';
+					echo'</div>';
+				echo'</div>';
+			} 
+		?>
 
 		<div class="footerbottom">
 			<div class="container">

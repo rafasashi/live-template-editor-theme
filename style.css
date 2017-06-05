@@ -3526,6 +3526,11 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
 	color: #fff;
 }
 
+.wedocs-single-content .entry-content ul {
+	
+	margin: 15px 0 15px 20px;
+}
+
 .wedocs-single-content .tags-links a {
 	
     color: #fff;
