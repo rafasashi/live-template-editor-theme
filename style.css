@@ -402,12 +402,23 @@ a.navbar-brand img {
 }
 /*==============================================* SECTIONS *===============================================*/
 
+.post, .page, .archive {
+	
+    display: inline-block;
+    width: 100%;
+}
+
 .post h1, .page h1, .archive  h1 {
 	
 	padding: 30px 30px;
 	font-weight: bold;
 	background: rgba(158, 158, 158, 0.24);
 	color: rgb(138, 206, 236);
+}
+
+.post h2, .page h2, .archive  h2 {
+	
+	padding: 20px 0;
 }
 
 .whites {

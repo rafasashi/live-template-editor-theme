@@ -1,9 +1,9 @@
 === ltple-theme ===
 
 Contributors: WowThemes.net Team
-Requires at least: WordPress 4.3
-Tested up to: WordPress 4.4
-Version: 2.1.0
+Requires at least: WordPress 4.8
+Tested up to: WordPress 4.8
+Version: 2.1.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.en.html
 Tags: white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
