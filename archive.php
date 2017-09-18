@@ -7,9 +7,11 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 ?>
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<h1 class="pgheadertitle animated fadeInLeft">
+
+	<div class="panel-header">
+	
+		<h1 style="padding: 30px 30px;font-weight: bold;background: rgba(158, 158, 158, 0.24);color: rgb(138, 206, 236);">
+			
 			<?php
 				if ( is_category() ) :
 					single_cat_title();
@@ -54,59 +56,47 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 					_e( 'Links', 'ltple-theme' );
 
 				else :
-					_e( 'Archives', 'ltple-theme' );
+					
+					//_e( 'Archives', 'ltple-theme' );
+					the_archive_title();
 
 				endif;
 			?>
-			</h1>
-			<?php
-			// Show an optional term description.
-			$term_description = term_description();
-			if ( ! empty( $term_description ) ) :
-				printf( '<div class="taxonomy-description">%s</div>', $term_description );
-			endif;
+		</h1>
+		
+		<?php
+		// Show an optional term description.
+		$term_description = term_description();
+		if ( ! empty( $term_description ) ) :
+			printf( '<div class="taxonomy-description">%s</div>', $term_description );
+		endif;
 		?>
 		
-		</div>
-	</div>
-</div>
+	</div>	
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-8">
-			<div class="row tiles blogindex content-area">
-				<?php if ( have_posts() ) : ?>
-					<?php /* Start the Loop */ ?>
-					<?php while ( have_posts() ) : the_post(); ?>
-						<div <?php post_class("col-md-6"); ?> id="post-<?php the_ID(); ?>">
-							<div class="inneritem">
-								<div class="wrapinneritem">
-								<header class="entry-header sectiontitlepost">
-									<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-									<div class="entry-meta">
-										<div class="pull-left"><i class="fa fa-calendar"></i>&nbsp; <?php the_time( get_option( 'date_format' ) ); ?></div>
-										<div class="text-right"><i class="fa fa-comment"></i>&nbsp;  <?php comments_popup_link( __( 'Add Comment', 'ltple-theme' ), __( '1 Comment', 'ltple-theme' ), __( '% Comments', 'ltple-theme' ),  __( 'Comments off', 'ltple-theme' ) ); ?></div>
-									</div><!-- .entry-meta -->
-									<a class="entry-thumbnail" href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php global $post; echo get_the_post_thumbnail($post->ID, 'recentprojects-thumb'); ?></a>
+	<div class="col-md-11">
+	
+		<div class="row tiles blogindex content-area">
+		
+			<?php if ( have_posts() ) : ?>
+				<?php /* Start the Loop */ ?>
+				<?php while ( have_posts() ) : the_post(); ?>
+				
+					<?php get_template_part( 'content', 'search' ); ?>
+						
+				<?php endwhile; ?>
+			<?php else : ?>
+				<?php get_template_part( 'no-results', 'archive' ); ?>
+			<?php endif; ?>
+		</div><!-- #content -->
+		
+		<div class="clearfix"></div>
+		
+		<?php the_posts_pagination();?>
+		
+	</div><!-- .col-md-8 -->
+	
+	<?php get_sidebar(); ?>
 
-								</header><!-- .entry-header -->
-								<div class="entry-content">
-
-									<?php echo wow_get_custom_excerpt(160); ?> <a href="<?php the_permalink(); ?>">[...]</a>
-									<div class="clearfix"></div>
-								</div><!-- .entry-content -->
-								</div>
-							</div>
-						</div><!-- #boxportfolio-## -->
-					<?php endwhile; ?>
-				<?php else : ?>
-					<?php get_template_part( 'no-results', 'archive' ); ?>
-				<?php endif; ?>
-			</div><!-- #content -->
-			<div class="clearfix"></div>
-			<?php the_posts_pagination();?>
-		</div><!-- .col-md-8 -->
-		<?php get_sidebar(); ?>
-	</div><!-- .row -->
 </div>
 <?php get_footer(); ?>
