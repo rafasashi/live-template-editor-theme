@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="container">
-		<nav class="navbar" role="navigation" style="background-color:#182f42;z-index:1040;">
+		<nav class="navbar" role="navigation">
 			<?php
 				if ( has_nav_menu( 'header' ) ) {
 				  wp_nav_menu( array(
@@ -40,39 +40,99 @@
 				}
 			?>
 			<div class="headersearch" style="background-color:transparent;">
-				<form style="background-color:transparent;" role="search" method="get" id="search" class="formheadersearch" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+				
+				<div class="formheadersearch" style="background-color:transparent;">
 					
-					<input style="background-color:transparent;" type="search" class="search-field" placeholder="<?php echo esc_attr_x( 'Enter search keywords here &hellip;', 'placeholder', 'ltple-theme' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>" name="s" title="<?php _ex( 'Search for:', 'label', 'ltple-theme' ); ?>">
-					<input style="background-color:transparent;" type="submit" class="search-submit" value="" style="background-color:transparent;">
+					<form id="search" style="float:left;" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+						
+						<input style="background-color:transparent;" type="search" class="search-field" placeholder="<?php echo esc_attr_x( 'Enter search keywords here &hellip;', 'placeholder', 'ltple-theme' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>" name="s" title="<?php _ex( 'Search for:', 'label', 'ltple-theme' ); ?>">
+						<input style="background-color:transparent;" type="submit" class="search-submit" value="" style="background-color:transparent;">
 
+					</form>
+				
 					<?php
-						
-						$id = get_current_user_id();
-						
-						$picture = get_user_meta( $id , 'ltple_profile_picture', true );
-						
-						if( empty($picture) ){
+
+						if( class_exists('LTPLE_Client') ){
 							
-							$picture = get_avatar_url( $id );
-						}
-						
-						if( $id > 0 ){
+							$ltple = LTPLE_Client::instance();
 							
-							$profile_url = esc_url( home_url( '/editor/?my-profile' ) );
+							$id = get_current_user_id();
+							
+							$picture = get_user_meta( $id , 'ltple_profile_picture', true );
+							
+							if( empty($picture) ){
+								
+								$picture = get_avatar_url( $id );
+							}
+							
+							if( $id > 0 ){
+								
+								$profile_url = esc_url( home_url( '/editor/?my-profile' ) );
+							}
+							else{
+
+								$profile_url = esc_url( home_url( '/login/' ) );
+							}
+
+							echo'<button style="margin-right:5px;float:right;background:transparent;border:none;width:49px;height:50px;display:inline-block;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img style="padding:10px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></button>';
+						
+							echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;">';
+								
+								echo'<li style="position:relative;">';
+									
+									echo '<a target="_blank" href="'. $ltple->urls->editor .'?pr='.$ltple->user->ID . '"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> View Profile</a>';
+
+								echo'</li>';					
+								
+								echo'<li style="position:relative;">';
+									
+									echo '<a href="'. $ltple->urls->editor .'?my-profile"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
+
+								echo'</li>';
+								
+								if( !empty( $ltple->url->host ) ){
+								
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. $ltple->urls->editor . '?domain"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Domains & URLs</a>';
+
+									echo'</li>';
+								}
+								
+								echo'<li style="position:relative;">';
+									
+									echo '<a href="'. $ltple->urls->editor .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
+
+								echo'</li>';
+								
+								do_action('ltple_view_my_profile');
+								
+								echo'<li style="position:relative;">';
+									
+									echo '<a href="'. wp_logout_url( $ltple->urls->editor ) .'"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>';
+
+								echo'</li>';	
+								
+							echo'</ul>';
 						}
 						else{
 
-							$profile_url = esc_url( home_url( '/login/' ) );
-						}
+							$redirect = get_dashboard_url();
 						
-						echo'<span style="width:49px;height:50px;display:inline-block;">';
+							$profile_url = wp_login_url( $redirect );
 							
-							echo'<a href="'.$profile_url.'" title="Edit my profile"><img style="padding:8px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></a>';
+							$picture = get_avatar_url( $id );
 							
-						echo'</span>';
+							echo'<span style="width:49px;height:50px;display:inline-block;">';
+								
+								echo'<a href="'.$profile_url.'" title="Edit my profile"><img style="padding:8px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></a>';
+								
+							echo'</span>';
+						}
 					?>
 					
-				</form>
+				</div>
+
 			</div>
 		</nav>
 		<div class="menushadow"></div>

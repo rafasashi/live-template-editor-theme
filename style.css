@@ -149,10 +149,12 @@ aside ul {
 }
 .navbar {
 	margin-bottom:0;
-	background:#222;
+	background:#182f42;
 	border-radius:0px;
 	max-height:50px;
 	border:0px;
+	z-index:1040;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 .navbar-text {
 	color:#ccc;
@@ -415,6 +417,7 @@ a.navbar-brand img {
 	padding: 30px;
 	font-weight: bold;
 	background: rgba(24, 47, 66, 0.06);
+	box-shadow: inset 0 -1px 7px -4px rgba(0,0,0,0.75);
 	color: rgb(138, 206, 236);
 }
 
@@ -3540,6 +3543,14 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
     padding: 5px 20px 20px 20px;
     background: rgb(250, 250, 250);
     margin-top: 40px;
+}
+
+.wedocs-shortcode-wrap ul.wedocs-docs-list li.wedocs-docs-single {
+	
+    border: none;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);	
 }
 
 .wedocs-shortcode-wrap ul.wedocs-docs-list li.wedocs-docs-single h3 {
