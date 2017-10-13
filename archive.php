@@ -74,7 +74,7 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 		
 	</div>	
 
-	<div class="col-md-11">
+	<div class="col-md-10">
 	
 		<div class="row tiles blogindex content-area">
 		
@@ -94,7 +94,7 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 		
 		<?php the_posts_pagination();?>
 		
-	</div><!-- .col-md-8 -->
+	</div>
 	
 	<?php get_sidebar(); ?>
 

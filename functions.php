@@ -7,7 +7,9 @@ function wow_bootstrap_scripts_styles() {
 	wp_enqueue_script('wow-easingjs', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'),'', true );
 	wp_enqueue_script('wow-commonjs', get_template_directory_uri() . '/js/common.js', array('jquery'),'', true );
 	wp_register_script('wow-isotopejs', get_template_directory_uri() .  '/js/isotope.js', array('jquery'), '', true );
-	wp_enqueue_style('wow-biscaya', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
+	
+	wp_enqueue_style('wow-bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
+
 	wp_enqueue_style('wow-fontawesome', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.0.3');
 	wp_enqueue_style('wow-animate', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
 	wp_enqueue_style('wow-style', get_stylesheet_uri() );
@@ -275,13 +277,6 @@ function wow_customize_register( $wp_customize ) {
 		)));
 
 	/*footer*/
-
-	$wp_customize->add_section('wow_copyright_section',
-		array(
-			'title'       => __( 'Footer Copyright', 'ltple-theme' ),
-			'description' => __( '<a style="border-bottom:3px solid rgba(0,0,0,0.1);border-radius:10px;background-color:orange;color:#fff;padding:15px;display:block;" target="_blank" href="https://www.wowthemes.net/themes/biscaya-wp/"> Curious about BISCAYA PREMIUM VERSION? Check it out here !</a>', 'ltple-theme'),
-			'priority' => 35,
-		));
 
 		$wp_customize->add_setting('wow_copyright',
       array(

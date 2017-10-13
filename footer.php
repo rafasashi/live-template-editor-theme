@@ -21,11 +21,11 @@
 				
 				echo'<div class="footer">';
 					echo'<div class="container">';
-						echo'<div class="row">';
+						//echo'<div class="row">';
 					
 							dynamic_sidebar( 'footerwidgets' );
 							
-						echo'</div>';
+						//echo'</div>';
 					echo'</div>';
 				echo'</div>';
 			} 
@@ -33,16 +33,20 @@
 
 		<div class="footerbottom">
 			<div class="container">
+			
 				<div class="row">
+				
 					<!-- left -->
 					<div class="col-md-5">
-         <?php
-          if( get_theme_mod( 'wow_copyright' ) == '') { ?>
-          <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
-          <?php }
-          else { echo wp_kses_post( get_theme_mod( 'wow_copyright' ) ); } ?>
+					
+						 <?php
+						  if( get_theme_mod( 'wow_copyright' ) == '') { ?>
+						  <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+						  <?php }
+						  else { echo wp_kses_post( get_theme_mod( 'wow_copyright' ) ); } ?>
 
-          </div>
+					</div>
+					
 					<!-- right -->
 					<div class="col-md-7 smallspacetop">
 						<div class="pull-right smaller">
@@ -61,11 +65,12 @@
 						}
 						?>
 						</div>
-						<div class="clearfix">
-						</div>
+						<div class="clearfix"></div>
 					</div>
 					<!-- end right -->
+					
 				</div>
+				
 			</div>
 		</div>
 	</footer>

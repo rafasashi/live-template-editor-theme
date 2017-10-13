@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<?php wp_head();?>
+
 </head>
 <body <?php body_class('boxedlayout'); ?>>
 	<div class="boxedcontent" style="z-index:auto;border:none;">
@@ -65,6 +66,8 @@
 								$picture = get_avatar_url( $id );
 							}
 							
+							$picture = add_query_arg(time(),'',$picture);
+							
 							if( $id > 0 ){
 								
 								$profile_url = esc_url( home_url( '/editor/?my-profile' ) );
@@ -120,7 +123,7 @@
 							$redirect = get_dashboard_url();
 						
 							$profile_url = wp_login_url( $redirect );
-							
+							 
 							$picture = get_avatar_url( $id );
 							
 							echo'<span style="width:49px;height:50px;display:inline-block;">';
