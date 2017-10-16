@@ -9,27 +9,31 @@
 <!-- FOOTER BEGIN
 	================================================== -->
 	
-	<footer id="colophon" role="contentinfo">
+	<?php 
 	
-		<div class="text-center wraptotop">
-			<a class="totop" style="border:none;"><i class="fa fa-chevron-up"></i></a>
-		</div>
-
-		<?php 
-		
-			if ( is_active_sidebar( 'footerwidgets' ) ) {
+		if ( is_active_sidebar( 'footerwidgets' ) ) {
+			
+			echo'<footer id="colophon" role="contentinfo">';
+			
+			echo'<div class="text-center wraptotop">';
+				echo'<a class="totop" style="border:none;"><i class="fa fa-chevron-up"></i></a>';
+			echo'</div>';				
+			
+			echo'<div class="footer">';
+				echo'<div class="container">';
+					//echo'<div class="row">';
 				
-				echo'<div class="footer">';
-					echo'<div class="container">';
-						//echo'<div class="row">';
-					
-							dynamic_sidebar( 'footerwidgets' );
-							
-						//echo'</div>';
-					echo'</div>';
+						dynamic_sidebar( 'footerwidgets' );
+						
+					//echo'</div>';
 				echo'</div>';
-			} 
-		?>
+			echo'</div>';
+		}
+		else{
+			
+			echo'<footer role="contentinfo">';
+		}
+	?>
 
 		<div class="footerbottom">
 			<div class="container">
