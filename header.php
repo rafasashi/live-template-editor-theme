@@ -93,7 +93,7 @@
 
 								echo'</li>';
 								
-								if( !empty( $ltple->url->host ) ){
+								if( $ltple->settings->options->enable_subdomains == 'on' ){
 								
 									echo'<li style="position:relative;">';
 										
