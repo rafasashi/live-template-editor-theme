@@ -7,7 +7,7 @@
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<?php wp_head();?>
 
-</head>
+</head> 
 <body <?php body_class('boxedlayout'); ?>>
 	<div class="boxedcontent" style="z-index:auto;border:none;">
 		<div class="header">
@@ -67,54 +67,64 @@
 							}
 							
 							$picture = add_query_arg(time(),'',$picture);
-							
-							if( $id > 0 ){
-								
-								$profile_url = esc_url( home_url( '/editor/?my-profile' ) );
-							}
-							else{
-
-								$profile_url = esc_url( home_url( '/login/' ) );
-							}
 
 							echo'<button style="margin-right:5px;float:right;background:transparent;border:none;width:49px;height:50px;display:inline-block;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img style="padding:10px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></button>';
 						
 							echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;">';
 								
-								echo'<li style="position:relative;">';
+								if( $id > 0 ){
 									
-									echo '<a target="_blank" href="'. $ltple->urls->editor .'?pr='.$ltple->user->ID . '"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> View Profile</a>';
-
-								echo'</li>';					
-								
-								echo'<li style="position:relative;">';
-									
-									echo '<a href="'. $ltple->urls->editor .'?my-profile"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
-
-								echo'</li>';
-								
-								if( $ltple->settings->options->enable_subdomains == 'on' ){
-								
 									echo'<li style="position:relative;">';
 										
-										echo '<a href="'. $ltple->urls->editor . '?domain"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Domains & URLs</a>';
+										echo '<a target="_blank" href="'. $ltple->urls->editor .'?pr='.$ltple->user->ID . '"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> View Profile</a>';
+
+									echo'</li>';					
+									
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. $ltple->urls->editor .'?my-profile"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
+
+									echo'</li>';
+									
+									if( $ltple->settings->options->enable_subdomains == 'on' ){
+									
+										echo'<li style="position:relative;">';
+											
+											echo '<a href="'. $ltple->urls->editor . '?domain"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Domains & URLs</a>';
+
+										echo'</li>';
+									}
+									
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. $ltple->urls->editor .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
+
+									echo'</li>';
+									
+									do_action('ltple_view_my_profile');
+									
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. wp_logout_url( $ltple->urls->editor ) .'"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>';
 
 									echo'</li>';
 								}
-								
-								echo'<li style="position:relative;">';
+								else{
 									
-									echo '<a href="'. $ltple->urls->editor .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
+									$login_url = home_url('/login/');
 
-								echo'</li>';
-								
-								do_action('ltple_view_my_profile');
-								
-								echo'<li style="position:relative;">';
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. esc_url( $login_url ) .'"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a>';
+
+									echo'</li>';
 									
-									echo '<a href="'. wp_logout_url( $ltple->urls->editor ) .'"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>';
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. esc_url( add_query_arg('action','register',$login_url) ) .'"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> Register</a>';
 
-								echo'</li>';	
+									echo'</li>';
+								}
 								
 							echo'</ul>';
 						}
