@@ -86,6 +86,12 @@
 
 									echo'</li>';
 									
+									echo'<li style="position:relative;">';
+										
+										echo '<a href="'. $ltple->urls->editor .'?my-profile=billing-info"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Billing Info</a>';
+
+									echo'</li>';
+									
 									if( $ltple->settings->options->enable_subdomains == 'on' ){
 									
 										echo'<li style="position:relative;">';
