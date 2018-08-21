@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:1.0.0
+Version:1.0.2
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -3649,3 +3649,45 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
     -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
+
+/*bbpress*/
+
+#bbpress-forums {
+    margin: 15px;
+	font-size: 13px;
+}
+
+#bbpress-forums ul.bbp-lead-topic, #bbpress-forums ul.bbp-topics, #bbpress-forums ul.bbp-forums, #bbpress-forums ul.bbp-replies, #bbpress-forums ul.bbp-search-results {
+    font-size: 15px;
+}
+
+div.bbp-breadcrumb, div.bbp-topic-tags {
+    font-size: 15px;
+    padding: 10px 0px;
+}
+
+#bbpress-forums #subscription-toggle span, #bbpress-forums #favorite-toggle span {
+    margin: 9px 5px 9px 5px;
+    font-size: 10px;
+    padding: 0px 7px;
+    background: #f7f7f7;
+    display: inline-block;
+}
+
+#bbpress-forums fieldset.bbp-form legend {
+    padding: 10px;
+    background: #fbfbfb;
+}
+
+#bbpress-forums .bbp-template-notice .avatar, #bbpress-forums .bbp-topic-meta .avatar {
+    max-width: 100%;
+    border: 1px solid #eeeeee;
+    margin-top: -8px;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: 0;
+    width: 20px;
+    height: auto;
+    background: #F9F9F9;
+    display: inline-block;
+} 
