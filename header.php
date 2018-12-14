@@ -46,8 +46,8 @@
 					
 					<form id="search" style="float:left;" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 						
-						<input style="background-color:transparent;" type="search" class="search-field" placeholder="<?php echo esc_attr_x( 'Enter search keywords here &hellip;', 'placeholder', 'ltple-theme' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>" name="s" title="<?php _ex( 'Search for:', 'label', 'ltple-theme' ); ?>">
-						<input style="background-color:transparent;" type="submit" class="search-submit" value="" style="background-color:transparent;">
+						<input style="background-color:#fff;margin:0px;box-shadow:inset 0px 0px 1px #182f42;height:30px;border-radius:15px;margin-top:10px;" type="search" class="search-field" placeholder="<?php echo esc_attr_x( 'Enter search keywords here &hellip;', 'placeholder', 'ltple-theme' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>" name="s" title="<?php _ex( 'Search for:', 'label', 'ltple-theme' ); ?>">
+						<input style="background-color:transparent;" type="submit" class="search-submit" value="">
 
 					</form>
 				
@@ -57,22 +57,39 @@
 							
 							$ltple = LTPLE_Client::instance();
 							
-							$id = get_current_user_id();
+							// stars
 							
-							$picture = get_user_meta( $id , 'ltple_profile_picture', true );
+							if( $ltple->settings->options->enable_ranking == 'on' ){
+							
+								echo'<div class="pull-left" style="padding:12px 0;">';
+						 
+									echo'<a style="margin-left:5px;" class="popover-btn" href="' . $ltple->urls->editor . '?rank" role="button" data-html="true" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-title="Popularity score" data-content="Your stars determine your rank in our World Ranking, give you visibility and drive traffic.">';
+						  
+										echo'<span class="badge" style="background-color: #fcfeff;color: #182f42;font-size: 11px;box-shadow: inset 0px 0px 1px #182f42;"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>  ' . ( is_numeric($ltple->user->stars) ? $ltple->user->stars : 0 )  . '</span>';
+									
+									echo'</a>';
+									
+								echo'</div>';
+							}							
+							
+							// avatar
+
+							$picture = get_user_meta( $ltple->user->ID , 'ltple_profile_picture', true );
 							
 							if( empty($picture) ){
 								
-								$picture = get_avatar_url( $id );
+								$picture = get_avatar_url( $ltple->user->ID );
 							}
 							
 							$picture = add_query_arg(time(),'',$picture);
 
 							echo'<button style="margin-right:5px;float:right;background:transparent;border:none;width:49px;height:50px;display:inline-block;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img style="padding:10px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></button>';
-						
+							
+							// account settings
+							
 							echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;">';
 								
-								if( $id > 0 ){
+								if( $ltple->user->ID > 0 ){
 									
 									echo'<li style="position:relative;">';
 										
@@ -92,18 +109,9 @@
 
 									echo'</li>';
 									
-									if( $ltple->settings->options->enable_subdomains == 'on' ){
-									
-										echo'<li style="position:relative;">';
-											
-											echo '<a href="'. $ltple->urls->editor . '?domain"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Domains & URLs</a>';
-
-										echo'</li>';
-									}
-									
 									echo'<li style="position:relative;">';
 										
-										echo '<a href="'. $ltple->urls->editor .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
+										echo '<a href="'. $ltple->urls->apps .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
 
 									echo'</li>';
 									

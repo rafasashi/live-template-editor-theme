@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:1.0.2
+Version:1.0.3
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -3653,8 +3653,11 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
 /*bbpress*/
 
 #bbpress-forums {
-    margin: 15px;
-	font-size: 13px;
+    background: transparent;
+    clear: both;
+    margin: 20px;
+    overflow: hidden;
+    font-size: 15px;
 }
 
 #bbpress-forums ul.bbp-lead-topic, #bbpress-forums ul.bbp-topics, #bbpress-forums ul.bbp-forums, #bbpress-forums ul.bbp-replies, #bbpress-forums ul.bbp-search-results {
