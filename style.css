@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:1.0.3
+Version:1.0.4
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -132,7 +132,7 @@ aside ul {
 	right:0;
 	margin-right:0 !Important;
 	border:0px;
-	background:#222;
+	background:#182f42;
 	position:absolute !important;
 }
 .social-icons.list-soc.header {
@@ -141,7 +141,7 @@ aside ul {
 	margin-top:30px;
 }
 .social-icons.list-soc.header li {
-	background-color:#222;
+	background-color:#182f42;
 	padding:14px;
 }
 .headerinfotopar {
@@ -221,7 +221,7 @@ a.navbar-brand img {
 	padding:0;
 	margin:0;
 	list-style:none;
-	background-color:#222;
+	background-color:#182f42;
 	border:0;
 	border-radius:0;
 	-webkit-box-shadow:none;
@@ -240,10 +240,10 @@ a.navbar-brand img {
 }
 .dropdown-menu>.active>a {
 	color:#fff;
-	background:#222;
+	background:#182f42;
 }
 .nav .open>a,.nav .open>a:hover,.nav .open>a:focus {
-	background:#222;
+	background:#182f42;
 	border:0px;
 	border-left:1px solid rgba(255,255,255,0.1);
 	border-right:1px solid rgba(0,0,0,0.8);
@@ -1372,7 +1372,7 @@ img.attachment-recentprojects-thumb:hover {
 	margin-left:-1px;
 }
 .headersearch #search input {
-	background:#222;
+	background:#182f42;
 	border:none;
 	-webkit-box-shadow:none;
 	-moz-box-shadow:none;
@@ -2105,7 +2105,7 @@ footer#colophon hr {
 	margin-top:-11px;
 }
 footer#colophon {
-	background:#222;
+	background:#182f42;
 	padding-top:60px;
 	border-top:1px solid rgba(0,0,0,0.05);
 	line-height:1.6;
@@ -2773,7 +2773,7 @@ ul.products a.button {
 	font-weight:600;
 }
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
-	color:#222;
+	color:#182f42;
 }
 .woocommerce .upsells.products h2,.woocommerce .cross-sells h2,.woocommerce .cart_totals h2 {
 	text-transform:uppercase;
@@ -3209,7 +3209,7 @@ footer.entry-meta,.wowmetaposts {
 }
 
 .nav-next a:hover,.nav-previous a:hover {
-	background-color: #222222;
+	background-color: #182f42;
 	color: #f86d18;
 }
 

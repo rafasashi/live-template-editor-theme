@@ -6,7 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<?php wp_head();?>
-
 </head> 
 <body <?php body_class('boxedlayout'); ?>>
 	<div class="boxedcontent" style="z-index:auto;border:none;">
@@ -63,7 +62,7 @@
 							
 								echo'<div class="pull-left" style="padding:12px 0;">';
 						 
-									echo'<a style="margin-left:5px;" class="popover-btn" href="' . $ltple->urls->editor . '?rank" role="button" data-html="true" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-title="Popularity score" data-content="Your stars determine your rank in our World Ranking, give you visibility and drive traffic.">';
+									echo'<a style="margin-left:5px;" class="popover-btn" href="' . $ltple->urls->ranking . '" role="button" data-html="true" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-title="Popularity score" data-content="Your stars determine your rank in our World Ranking, give you visibility and drive traffic.">';
 						  
 										echo'<span class="badge" style="background-color: #fcfeff;color: #182f42;font-size: 11px;box-shadow: inset 0px 0px 1px #182f42;"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>  ' . ( is_numeric($ltple->user->stars) ? $ltple->user->stars : 0 )  . '</span>';
 									
@@ -74,42 +73,74 @@
 							
 							// avatar
 
-							$picture = get_user_meta( $ltple->user->ID , 'ltple_profile_picture', true );
+							$picture = $ltple->image->get_avatar_url( $ltple->user->ID );
 							
-							if( empty($picture) ){
-								
-								$picture = get_avatar_url( $ltple->user->ID );
-							}
+							$picture = add_query_arg('_',time(),$picture);
 							
-							$picture = add_query_arg(time(),'',$picture);
-
 							echo'<button style="margin-right:5px;float:right;background:transparent;border:none;width:49px;height:50px;display:inline-block;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img style="padding:10px;" class="img-circle" src="'.$picture.'" height="50" width="50" /></button>';
 							
 							// account settings
 							
-							echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;">';
+							echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;margin-top:-2px;">';
 								
 								if( $ltple->user->ID > 0 ){
-									
-									echo'<li style="position:relative;">';
-										
-										echo '<a target="_blank" href="'. $ltple->urls->editor .'?pr='.$ltple->user->ID . '"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> View Profile</a>';
 
-									echo'</li>';					
-									
-									echo'<li style="position:relative;">';
+									echo'<li style="position:relative;display:table;width:100%;background:#112331;box-shadow: inset 0 0 10px #060c10;">';
 										
-										echo '<a href="'. $ltple->urls->editor .'?my-profile"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
+										echo'<div style="
+											float: left;
+											width: 30%;
+											padding: 12px;
+										">';
+										
+											echo'<img style="border: 2px solid #3b4954;" class="img-circle" src="'.$picture.'">';
+										
+										echo'</div>';
+										
+										echo'<div style="
+											width: 70%;
+											float: left;
+											padding: 8px 6px 2px 6px;
+										">';
+											
+											echo'<a href="'. $ltple->urls->profile . $ltple->user->ID . '/" style="
+												display: block;
+												width: 100%;
+											">';
+												
+												echo'<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ';
+												echo'View Profile';
+											
+											echo'</a>';
+											
+											echo'<div data-html="true" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-title="Account credits" data-content="They can only be used to purchase services on the platform. They are non-refundable & non-exchangeable." data-original-title="" style="
+												color: #eee;
+												font-weight: bold;
+											">';
+											
+												echo'Credits: <span id="accountCreditsValue" style="background:#3b4954;border:0;padding:3px 7px;font-size: 12px;border-radius:10px;margin-bottom:3px;" class="badge">...</span>';
+
+											echo'</div>';
+											
+											do_action('ltple_my_profile_counters');
+											
+										echo'</div>';
+										
+									echo'</li>';								
+									
+									echo'<li style="position:relative;background:#182f42;">';
+										
+										echo '<a href="'. $ltple->urls->profile .'"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
 
 									echo'</li>';
 									
-									echo'<li style="position:relative;">';
+									echo'<li style="position:relative;background:#182f42;">';
 										
 										echo '<a href="'. $ltple->urls->editor .'?my-profile=billing-info"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Billing Info</a>';
 
 									echo'</li>';
 									
-									echo'<li style="position:relative;">';
+									echo'<li style="position:relative;background:#182f42;">';
 										
 										echo '<a href="'. $ltple->urls->apps .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
 
@@ -117,7 +148,7 @@
 									
 									do_action('ltple_view_my_profile');
 									
-									echo'<li style="position:relative;">';
+									echo'<li style="position:relative;background:#182f42;">';
 										
 										echo '<a href="'. wp_logout_url( $ltple->urls->editor ) .'"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>';
 
@@ -127,13 +158,13 @@
 									
 									$login_url = home_url('/login/');
 
-									echo'<li style="position:relative;">';
+									echo'<li style="position:relative;background:#182f42;">';
 										
 										echo '<a href="'. esc_url( $login_url ) .'"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a>';
 
 									echo'</li>';
 									
-									echo'<li style="position:relative;">';
+									echo'<li style="position:relative;background:#182f42;">';
 										
 										echo '<a href="'. esc_url( add_query_arg('action','register',$login_url) ) .'"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span> Register</a>';
 
