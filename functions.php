@@ -4,17 +4,18 @@
 Styles & Scripts
 *********************************************************************************************/
 function wow_bootstrap_scripts_styles() {
-	wp_enqueue_script('wow-bootstrapjs', get_template_directory_uri() . '/js/bootstrap.js', array('jquery'),'3.3.5', true );
-	wp_enqueue_script('wow-easingjs', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'),'', true );
-	wp_enqueue_script('wow-commonjs', get_template_directory_uri() . '/js/common.js', array('jquery'),'', true );
-	wp_register_script('wow-isotopejs', get_template_directory_uri() .  '/js/isotope.js', array('jquery'), '', true );
 	
-	wp_enqueue_style('wow-bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
+	wp_enqueue_script('ltple-bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array('jquery'),'3.3.5', true );
+	wp_enqueue_script('ltple-easing-js', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'),'', true );
+	wp_enqueue_script('ltple-common-js', get_template_directory_uri() . '/js/common.js', array('jquery'),'', true );
+	wp_register_script('ltple-isotope-js', get_template_directory_uri() .  '/js/isotope.js', array('jquery'), '', true );
+	
+	wp_enqueue_style('ltple-bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
 
-	wp_enqueue_style('wow-fontawesome', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.0.3');
-	wp_enqueue_style('wow-animate', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
-	wp_enqueue_style('wow-style', get_stylesheet_uri() );
-	wp_enqueue_style('wow-altstyle', get_template_directory_uri() . '/css/skins/orange.css', false ,'1.0');
+	wp_enqueue_style('ltple-fontawesome-css', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.0.3');
+	wp_enqueue_style('ltple-animate-css', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
+	wp_enqueue_style('ltple-style-css', get_stylesheet_uri(), array('ltple-bootstrap-css'), '5.0.6' ); //style.css
+
 }
 add_action('wp_enqueue_scripts', 'wow_bootstrap_scripts_styles');
 
@@ -25,7 +26,9 @@ if ( ! isset( $content_width ) )
 	$content_width = 640; /* pixels */
 
 if ( ! function_exists( 'wow_setup' ) ) :
+
 function wow_setup() {
+	
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'custom-background' );
 	add_editor_style( 'custom-editor-style.css' );
@@ -306,7 +309,8 @@ require_once( get_template_directory() . '/inc/nav.php');
 /*********************************************************************************************
 WOO COMMERCE SUPPORT
 *********************************************************************************************/
-add_action( 'after_setup_theme', 'woocommerce_support' );
-function woocommerce_support() {
-    add_theme_support( 'woocommerce' );
-}
+
+add_action( 'after_setup_theme', function() {
+   
+   add_theme_support( 'woocommerce' );
+} );

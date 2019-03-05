@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:1.0.4
+Version:1.0.5
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -21,7 +21,7 @@ body {
 	color:#666;
 	-webkit-font-smoothing:antialiased;
 	line-height:1.80em;
-	background-color:#444;
+	background-color:#182f42;
 	font-family:Open Sans, Helvetica;
 }
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
@@ -704,7 +704,7 @@ section.homerecentportfolio h1.heading {
 .recent-posts article .month {
 	-moz-box-shadow:0 -1px 0 0 rgba(0,0,0,0.07) inset;
 	-webkit-box-shadow:0 -1px 0 0 rgba(0,0,0,0.07) inset;
-	background:#444;
+	background:#182f42;
 	box-shadow:0 -1px 0 0 rgba(0,0,0,0.07) inset;
 	color:#FFFFFF;
 	font-size:0.9em;
@@ -730,7 +730,7 @@ section.homerecentportfolio h1.heading {
 	color:#333;
 }
 .calltoactionarea .buttonblack {
-	background:#333;
+	background:#182f42;
 	line-height:40px;
 	padding:7px 20px;
 	border-radius:0;
@@ -1603,7 +1603,7 @@ h1.widget-title {
 	color:#3a3a3a;
 }
 h1.widget-title {
-	background:#333;
+	background:#182f42;
 	background-position:center;
 	min-height:0;
 	padding:0;
@@ -1755,7 +1755,7 @@ ul {
 	text-decoration:none;
 	width:auto;
 	color:#fff;
-	background:#444;
+	background:#182f42;
 }
 .pagination a:hover {
 	color:#fff;
@@ -2072,7 +2072,7 @@ li.comment {
 	margin-top:-10px;
 }
 .servicespage i {
-	background:#444;
+	background:#182f42;
 	color:#fff;
 	width:40px;
 	height:40px;
@@ -2150,11 +2150,11 @@ footer ul.social-icons li {
 	color:#fff;
 }
 .footerbottom {
-	background:#333;
+	background:#101f2b;
 	margin-top:40px;
 	line-height:50px;
 	color:#fff;
-	border-top:1px solid #444;
+	/*border-top:1px solid #444;*/
 	font-size:11px;
 }
 .footerbottom a {
@@ -2483,7 +2483,7 @@ a.text-logo {color:#333;}
 	}
 	.tinynav {
 				display:block;
-				background:#444;
+				background:#182f42;
 				border:0px;
 				width:100%;
 				color:#fff;
@@ -2525,7 +2525,7 @@ a.text-logo {color:#333;}
 				height:100%;
 	}
 	.navbar-collapse {
-				background:#444;
+				background:#182f42;
 				max-height:380px;
 	}
 	.navbar-collapse .nav>li>a {
@@ -2537,7 +2537,7 @@ a.text-logo {color:#333;}
 				padding:7px 10px;
 	}
 	.dropdown-menu {
-				background:#444;
+				background:#182f42;
 	}
 	.navbar-collapse .nav>li>a:hover {
 				background-color:#eee !Important;
@@ -3260,9 +3260,9 @@ footer.entry-meta,.wowmetaposts {
 
 /*** Plans post standalone***/
 [class*='edplan-'] {
-	width: 80%;
+
 	height: auto;
-	padding: 20px;
+
 	font-size: 20px;
 	margin: 20px auto;
 }
@@ -3271,7 +3271,7 @@ footer.entry-meta,.wowmetaposts {
 	display: block;
 	margin: 0 auto;
 	line-height: normal;
-	padding: 7px 17px;
+
 	border-bottom: 1px solid #cccccc;
 }
 
