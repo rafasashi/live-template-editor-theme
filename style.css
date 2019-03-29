@@ -1372,7 +1372,6 @@ img.attachment-recentprojects-thumb:hover {
 	margin-left:-1px;
 }
 .headersearch #search input {
-	background:#182f42;
 	border:none;
 	-webkit-box-shadow:none;
 	-moz-box-shadow:none;
@@ -3328,10 +3327,6 @@ a:hover.totop {
 /*** Footer fix ***/
 .col-md-4, .footer-widget {
 	padding: 4px 22px;
-}
-
-.footerbottom {
-	padding-left: 12px;
 }
 
 .smallspacetop,.footermenu {

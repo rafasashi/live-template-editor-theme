@@ -27,6 +27,6 @@
 </head> 
 <body <?php body_class('boxedlayout'); ?>>
 	
-	<div id="ltple-wrapper" class="boxedcontent" style="z-index:auto;border:none;">
+	<div id="ltple-wrapper" class="boxedcontent" style="position:absolute;z-index:auto;border:none;">
 		
 		<?php include_once('navbar.php'); ?>
