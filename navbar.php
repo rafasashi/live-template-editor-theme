@@ -43,22 +43,15 @@
 					
 					$ltple = LTPLE_Client::instance();
 					
-					// stars
+					echo'<div id="navbar-features" class="pull-left" style="padding:12px 0;">';	
 					
-					if( $ltple->settings->options->enable_ranking == 'on' ){
+						do_action('ltple_menu_buttons');	
 					
-						echo'<div class="pull-left" style="padding:12px 0;">';
-				 
-							echo'<a style="margin-left:5px;" class="popover-btn" href="' . $ltple->urls->ranking . '" role="button" data-html="true" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-title="Popularity score" data-content="Your stars determine your rank in our World Ranking, give you visibility and drive traffic.">';
-				  
-								echo'<span class="badge" style="background-color: #fcfeff;color: #182f42;font-size: 11px;box-shadow: inset 0px 0px 1px #182f42;"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>  ' . ( is_numeric($ltple->user->stars) ? $ltple->user->stars : 0 )  . '</span>';
-							
-							echo'</a>';
-							
-						echo'</div>';
-					}							
+					echo'</div>';
 					
 					// avatar
+					
+					do_action('ltple_avatar_menu');
 
 					$picture = $ltple->image->get_avatar_url( $ltple->user->ID );
 					
@@ -117,13 +110,19 @@
 							
 							echo'<li style="position:relative;background:#182f42;">';
 								
+								echo '<a href="'. $ltple->urls->dashboard .'"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Dashboard</a>';
+
+							echo'</li>';							
+							
+							echo'<li style="position:relative;background:#182f42;">';
+								
 								echo '<a href="'. $ltple->urls->profile .'"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
 
 							echo'</li>';
 							
 							echo'<li style="position:relative;background:#182f42;">';
 								
-								echo '<a href="'. $ltple->urls->editor .'?my-profile=billing-info"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Billing Info</a>';
+								echo '<a href="'. $ltple->urls->profile .'?tab=billing-info"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Billing Info</a>';
 
 							echo'</li>';
 							

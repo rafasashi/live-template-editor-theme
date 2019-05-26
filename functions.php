@@ -14,7 +14,7 @@ function wow_bootstrap_scripts_styles() {
 
 	wp_enqueue_style('ltple-fontawesome-css', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.0.3');
 	wp_enqueue_style('ltple-animate-css', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
-	wp_enqueue_style('ltple-style-css', get_stylesheet_uri(), array('ltple-bootstrap-css'), '5.0.6' ); //style.css
+	wp_enqueue_style('ltple-style-css', get_stylesheet_uri(), array('ltple-bootstrap-css'), '5.0.7' ); //style.css
 
 }
 add_action('wp_enqueue_scripts', 'wow_bootstrap_scripts_styles');
@@ -124,19 +124,26 @@ function wow_content_nav( $nav_id ) {
 		return;
 	$nav_class = ( is_single() ) ? 'post-navigation' : 'paging-navigation';
 	?>
-	<nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo $nav_class; ?>">
-	<?php if ( is_single() ) : // navigation links for single posts ?>
-		<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'ltple-theme' ) . '</span> %title' ); ?>
-		<?php next_post_link( '<div class="nav-next">%link</div><div class="clearfix"></div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'ltple-theme' ) . '</span>' ); ?>
-	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
-		<?php if ( get_next_posts_link() ) : ?>
-		<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'ltple-theme' ) ); ?></div>
+	<nav style="display:inline-block;width:100%;" role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo $nav_class; ?>">
+	
+		<div class="col-md-1"></div><div class="col-md-10">
+	
+		<?php if ( is_single() ) : // navigation links for single posts ?>
+			<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'ltple-theme' ) . '</span> %title' ); ?>
+			<?php next_post_link( '<div class="nav-next">%link</div><div class="clearfix"></div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'ltple-theme' ) . '</span>' ); ?>
+		<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
+			<?php if ( get_next_posts_link() ) : ?>
+			<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'ltple-theme' ) ); ?></div>
+			<?php endif; ?>
+			<?php if ( get_previous_posts_link() ) : ?>
+			<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'ltple-theme' ) ); ?></div>
+			<?php endif; ?>
 		<?php endif; ?>
-		<?php if ( get_previous_posts_link() ) : ?>
-		<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'ltple-theme' ) ); ?></div>
-		<?php endif; ?>
-	<?php endif; ?>
+		
+		</div><div class="col-md-1"></div>
+	
 	</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
+	
 	<?php
 }
 endif; // wow_content_nav

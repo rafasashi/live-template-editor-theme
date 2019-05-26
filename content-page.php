@@ -8,13 +8,15 @@
 
 	<div class="entry-content" style="display:inline-block;width:100%;">
 	
-		<?php the_content(); ?>
+		<?php 
 		
-		<?php
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . __( 'Pages:', 'ltple-theme' ),
-				'after'  => '</div>',
-			) );
+		the_content();
+		
+		wp_link_pages( array(
+			'before' => '<div class="page-links"><div class="col-md-1"></div><div class="col-md-10">' . __( 'Pages:', 'ltple-theme' ),
+			'after'  => '</div><div class="col-md-1"></div></div>',
+		) );
+		
 		?>
 	</div><!-- .entry-content -->
 </article><!-- #post-## -->

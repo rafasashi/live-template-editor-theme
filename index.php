@@ -15,7 +15,10 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-8">
+	
+		<div class="col-md-1"></div>
+		
+		<div class="col-md-10">
 
 		<?php
 		$args = array(
@@ -34,7 +37,8 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 
 		$do_not_duplicate[] = $post->ID;
 		?>
-			<div class="hero-unit box effect2">
+			<div class="hero-unit box effect2" style="margin-top:45px;">
+			
 				<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 				<p>
 					<a class="entry-thumbnail pull-left paddingright top10" href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php global $post; echo get_the_post_thumbnail($post->ID, 'sticky-thumb'); ?></a>
@@ -67,28 +71,35 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 					) );
 			if ( have_posts() ) : ?>
 					<?php /* Start the Loop */ ?>
-					<?php while ( have_posts() ) : the_post(); ?>
-						<div <?php post_class("col-md-6"); ?> id="post-<?php the_ID(); ?>">
-							<div class="inneritem">
-								<div class="wrapinneritem">
-								<header class="entry-header sectiontitlepost">
-									<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-									<div class="entry-meta">
-										<div class="pull-left"><i class="fa fa-calendar"></i>&nbsp; <?php the_time( get_option( 'date_format' ) ); ?></div>
-										<div class="text-right"><i class="fa fa-comment"></i>&nbsp;  <?php comments_popup_link( __( 'Add Comment', 'ltple-theme' ), __( '1 Comment', 'ltple-theme' ), __( '% Comments', 'ltple-theme' ), __( 'Comments off', 'ltple-theme' ) ); ?></div>
-									</div><!-- .entry-meta -->
-									<a class="entry-thumbnail" href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php global $post; echo get_the_post_thumbnail($post->ID, 'recentprojects-thumb'); ?></a>
+					<?php while ( have_posts() ) : the_post();
+						
+						global $post;
+					
+						echo'<div class="' . implode( ' ', get_post_class("col-xs-12 col-sm-6",$post->ID) ) . '" id="post-' . $post->ID . '">';
+							
+							echo'<div class="panel panel-default">';
 
-								</header><!-- .entry-header -->
-								<div class="entry-content">
-
-									<?php echo wow_get_custom_excerpt(176); ?> <a href="<?php the_permalink(); ?>">[...]</a>
-									<div class="clearfix"></div>
-								</div><!-- .entry-content -->
-								</div>
-							</div>
-						</div><!-- #boxportfolio-## -->
-					<?php endwhile; ?>
+								echo'<div class="thumb_wrapper" style="background:url(' . get_the_post_thumbnail_url($post->ID, 'recentprojects-thumb') . ');background-size:cover;background-repeat:no-repeat;background-position:center center;"></div>'; //thumb_wrapper					
+								
+								echo'<div class="panel-body">';
+									
+									echo '<h3 style="height:50px;overflow:hiden;">' . $post->post_title . '</h3>';
+									
+									echo wow_get_custom_excerpt(170);
+									 
+								echo'</div>';
+								
+								echo'<div style="background:#fff;border:none;" class="panel-footer text-right">';
+									
+									echo'<a class="btn btn-sm btn-primary" href="' . get_permalink() . '" target="_self">Read more</a>';
+									
+								echo'</div>';
+							
+							echo'</div>';
+							
+						echo'</div>';
+						
+					endwhile; ?>
 				<?php else : ?>
 					<?php get_template_part( 'no-results', 'index' ); ?>
 				<?php endif; ?>
@@ -108,28 +119,36 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 					) );
 			if ( have_posts() ) : ?>
 					<?php /* Start the Loop */ ?>
-					<?php while ( have_posts() ) : the_post();  $do_not_duplicate[] = $post->ID; ?>
-						<div <?php post_class("col-md-6"); ?> id="post-<?php the_ID(); ?>">
-							<div class="inneritem">
-								<div class="wrapinneritem">
-								<header class="entry-header sectiontitlepost">
-									<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
-									<div class="entry-meta">
-										<div class="pull-left"><i class="fa fa-calendar"></i>&nbsp; <?php the_time( get_option( 'date_format' ) ); ?></div>
-										<div class="text-right"><i class="fa fa-comment"></i>&nbsp;  <?php comments_popup_link( __( 'Add Comment', 'ltple-theme' ), __( '1 Comment', 'ltple-theme' ), __( '% Comments', 'ltple-theme' ), __( 'Comments off', 'ltple-theme' ) ); ?></div>
-									</div><!-- .entry-meta -->
-									<a class="entry-thumbnail" href="<?php the_permalink() ?>" title="<?php the_title() ?>"><?php global $post; echo get_the_post_thumbnail($post->ID, 'recentprojects-thumb'); ?></a>
+					<?php while ( have_posts() ) : the_post();  $do_not_duplicate[] = $post->ID;
 
-								</header><!-- .entry-header -->
-								<div class="entry-content">
+						global $post;
+					
+						echo'<div class="' . implode( ' ', get_post_class("col-xs-12 col-sm-6",$post->ID) ) . '" id="post-' . $post->ID . '">';
+							
+							echo'<div class="panel panel-default">';
 
-									<?php echo wow_get_custom_excerpt(176); ?> <a href="<?php the_permalink(); ?>">[...]</a>
-									<div class="clearfix"></div>
-								</div><!-- .entry-content -->
-								</div>
-							</div>
-						</div><!-- #boxportfolio-## -->
-					<?php endwhile; ?>
+								echo'<div class="thumb_wrapper" style="background:url(' . get_the_post_thumbnail_url($post->ID, 'recentprojects-thumb') . ');background-size:cover;background-repeat:no-repeat;background-position:center center;"></div>'; //thumb_wrapper					
+								
+								echo'<div class="panel-body">';
+									
+									echo '<h3 style="height:50px;overflow:hiden;">' . $post->post_title . '</h3>';
+									
+									echo wow_get_custom_excerpt(150) . ' [...]';
+									 
+								echo'</div>';
+								
+								echo'<div style="background:#fff;border:none;" class="panel-footer text-right">';
+									
+									echo'<a class="btn btn-sm btn-primary" href="' . get_permalink() . '" target="_self">Read more</a>';
+									
+								echo'</div>';
+							
+							echo'</div>';
+							
+						echo'</div>';				
+						
+					endwhile; ?>
+					
 				<?php else : ?>
 					<?php get_template_part( 'no-results', 'index' ); ?>
 				<?php endif; ?>
@@ -144,8 +163,10 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 			<div class="clearfix"></div>
 			<?php the_posts_pagination();?>
 		</div><!-- .col-md-8 -->
+		
+		<div class="col-md-1"></div>
 
-		<?php get_sidebar(); ?>
+		<?php //get_sidebar(); ?>
 
 	</div><!-- .row -->
 </div>
