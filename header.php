@@ -1,8 +1,16 @@
+<!DOCTYPE html>
 <?php
 
+	$is_profile_page = false;
+		
 	if( class_exists('LTPLE_Client') ){
 		
-		$ltple = LTPLE_Client::instance();			
+		$ltple = LTPLE_Client::instance();
+		
+		if( !empty($ltple->profile->id) ){
+			
+			$is_profile_page = true;
+		}
 		
 		// add head
 		
@@ -15,9 +23,10 @@
 		add_filter( 'wp_nav_menu', array( $ltple, 'get_menu' ), 10, 2);			
 		
 	}
+	
+	define('LTPLE_IS_PROFILE_PAGE',$is_profile_page);
 ?>		
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="<?php echo apply_filters('ltple_document_classes','ltple-theme'); ?>">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +35,23 @@
 	<?php wp_head();?>
 </head> 
 <body <?php body_class('boxedlayout'); ?>>
-	
+
 	<div id="ltple-wrapper" class="boxedcontent" style="position:absolute;z-index:auto;border:none;">
 		
-		<?php include_once('navbar.php'); ?>
+	<?php 
+
+		if( LTPLE_IS_PROFILE_PAGE ){
+			
+			include_once('navbar-profile.php'); 
+		}
+		else{
+			
+			include_once('navbar.php'); 
+		}
+		
+		echo '<div class="floating-buttons" style="position:fixed;z-index:1050;right:0;bottom:50px;margin:15px 3%;">';
+		
+			echo apply_filters('ltple_floating_buttons','');
+			
+		echo '</div>';
+		

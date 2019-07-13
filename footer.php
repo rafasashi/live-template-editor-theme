@@ -11,7 +11,7 @@
 	
 	<?php 
 	
-		if ( is_active_sidebar( 'footerwidgets' ) ) {
+		if( !LTPLE_IS_PROFILE_PAGE && is_active_sidebar( 'footerwidgets' ) ) {
 			
 			echo'<footer id="colophon" role="contentinfo">';
 			
@@ -34,8 +34,8 @@
 			echo'<footer role="contentinfo">';
 		}
 	?>
-
-		<div class="footerbottom" style="padding:0;">
+	
+		<div class="footerbottom">
 			
 			<div class="container">
 			
@@ -73,8 +73,12 @@
 				<!-- end right -->
 				
 			</div>
-		</div>
+		</div>	
+	
 	</footer>
+	
+	
+	
 <!-- FOOTER END
 ================================================== -->
 </div>

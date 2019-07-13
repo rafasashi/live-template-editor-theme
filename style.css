@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:1.0.5
+Version:6.0.1
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -74,6 +74,16 @@ img {
 }
 aside ul {
 	list-style:none;
+}
+footer{
+	
+    bottom: 0;
+    /*position: absolute;*/
+    width: 100%;	
+}
+#main{
+	
+    /*min-height:100%;*/
 }
 .unstyle ul,.unstyle ol,ul.unstyle,ol.unstyle {
 	-moz-padding-start:0px;
@@ -2105,9 +2115,12 @@ footer#colophon hr {
 }
 footer#colophon {
 	background:#182f42;
-	padding-top:60px;
+	padding:0px;
 	border-top:1px solid rgba(0,0,0,0.05);
 	line-height:1.6;
+}
+footer#colophon .footer {
+	padding:20px 0;
 }
 footer#colophon a,footer#colophon {
 	-webkit-transition:all 0.5s ease-in-out;
@@ -2150,11 +2163,12 @@ footer ul.social-icons li {
 }
 .footerbottom {
 	background:#101f2b;
-	margin-top:40px;
+	margin-top:0px;
 	line-height:50px;
 	color:#fff;
 	/*border-top:1px solid #444;*/
 	font-size:11px;
+	padding:0;
 }
 .footerbottom a {
 	color:#fff !Important;
@@ -2197,10 +2211,9 @@ ul.footermenu li {
 	cursor:pointer;
 }
 .wraptotop {
-	margin-top:-85px;
-	padding-bottom: 25px;
+	margin-top:-30px;
 	position: absolute;
-    width: 100%;
+    left: 50%;
 }
 /* =========================================================== */
 /* OTHER /* ============================================================== */
@@ -2489,29 +2502,32 @@ a.text-logo {color:#333;}
 				height:44px;
 				padding-left:100px !important;
 	}
+	#main {
+		min-height:100%;
+	}
 	#main-menu {
-				display:none;
+		display:none;
 	}
-		.navbar.pull-right {
-				float:none !important;
-				position:absolute;
-				bottom:-43px;
-				width:100.1%;
-				left:0;
-	}
-		.navbar-collapse {
-				padding-right:0;
-				padding-left:0;
-				margin-left:-1px;
-				margin-right:-3px;
-	}
-		.collapse {
-				display:block;
+	.navbar.pull-right {
+		float:none !important;
+		position:absolute;
+		bottom:-43px;
+		width:100.1%;
+		left:0;
 	}
 	.navbar-collapse {
-				background:none;
-				width:100.3%;
-				max-height:auto;
+		padding-right:0;
+		padding-left:0;
+		margin-left:-1px;
+		margin-right:-3px;
+	}
+	.collapse {
+		display:none;
+	}
+	.navbar-collapse {
+		background:none;
+		width:100.3%;
+		max-height:auto;
 	}
 	.colorarea,.homeslider.fullwidth.flexslider,.single .inneritempost {
 			margin-top:0px;

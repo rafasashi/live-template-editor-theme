@@ -18,7 +18,7 @@
 		if ( has_nav_menu( 'header' ) ) {
 		  wp_nav_menu( array(
 			'theme_location'  => 'header',
-			'container_class' => 'collapse navbar-collapse',
+			'container_class' => 'navbar-collapse',
 			'menu_class'      => 'nav navbar-nav',
 			'menu_id'         => 'main-menu',
 			'fallback_cb' 	  => false,
@@ -61,7 +61,7 @@
 					
 					// account settings
 					
-					echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;margin-top:-2px;">';
+					echo'<ul class="dropdown-menu dropdown-menu-right" style="width:250px;margin-top:-3px;">';
 						
 						if( $ltple->user->ID > 0 ){
 
@@ -106,31 +106,9 @@
 									
 								echo'</div>';
 								
-							echo'</li>';								
-							
-							echo'<li style="position:relative;background:#182f42;">';
-								
-								echo '<a href="'. $ltple->urls->dashboard .'"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Dashboard</a>';
-
-							echo'</li>';							
-							
-							echo'<li style="position:relative;background:#182f42;">';
-								
-								echo '<a href="'. $ltple->urls->profile .'"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Settings</a>';
-
 							echo'</li>';
-							
-							echo'<li style="position:relative;background:#182f42;">';
-								
-								echo '<a href="'. $ltple->urls->profile .'?tab=billing-info"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Billing Info</a>';
 
-							echo'</li>';
-							
-							echo'<li style="position:relative;background:#182f42;">';
-								
-								echo '<a href="'. $ltple->urls->apps .'?app"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Connected Apps</a>';
-
-							echo'</li>';
+							do_action('ltple_view_my_profile_settings');														
 							
 							do_action('ltple_view_my_profile');
 							
