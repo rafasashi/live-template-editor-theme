@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:6.0.1
+Version:6.0.4.1
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -3661,7 +3661,43 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
-/*bbpress*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+	
+	border:1px solid #e5e5e5;
+	border-bottom-color:transparent;
+}
+
+.row.gutter-0 {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.row.gutter-0 [class*="col-"] {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.row.gutter-10 {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.row.gutter-10 [class*="col-"] {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.row.gutter-20 {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.row.gutter-20 [class*="col-"] {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+/* bbpress */
 
 #bbpress-forums {
     background: transparent;

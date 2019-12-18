@@ -3,7 +3,8 @@
 /*********************************************************************************************
 Styles & Scripts
 *********************************************************************************************/
-function wow_bootstrap_scripts_styles() {
+
+add_action('wp_enqueue_scripts', function(){
 	
 	$theme = wp_get_theme();
 	
@@ -15,14 +16,27 @@ function wow_bootstrap_scripts_styles() {
 	wp_register_script('ltple-isotope-js', get_template_directory_uri() .  '/js/isotope.js', array('jquery'),'1.0.0', true );
 	
 	wp_enqueue_style('ltple-bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
-
-	wp_enqueue_style('ltple-fontawesome-css', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.0.3');
-	wp_enqueue_style('ltple-animate-css', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
+   
+	// fontawesome
 	
-	wp_enqueue_style('ltple-style-css', get_stylesheet_uri(), array('ltple-bootstrap-css'), $version ); //style.css
+	wp_enqueue_style('ltple-fontawesome', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.7.0');
+	
+	// animate
+	
+	wp_enqueue_style('ltple-animate', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
+	
+	// theme
+	
+	wp_enqueue_style('ltple-theme-style', get_stylesheet_uri(), array('ltple-bootstrap-css'), $version ); //style.css
+	
+},0);
 
-}
-add_action('wp_enqueue_scripts', 'wow_bootstrap_scripts_styles');
+add_action('wp_enqueue_scripts', function(){
+
+    wp_dequeue_style('wpb-faa-css');
+	wp_deregister_style('wpb-faa-css');
+	
+},9999);
 
 /*********************************************************************************************
 SETUP, HEADER & FOOTER MENUS
@@ -30,9 +44,7 @@ SETUP, HEADER & FOOTER MENUS
 if ( ! isset( $content_width ) )
 	$content_width = 640; /* pixels */
 
-if ( ! function_exists( 'wow_setup' ) ) :
-
-function wow_setup() {
+add_action( 'after_setup_theme', function() {
 	
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'custom-background' );
@@ -43,9 +55,7 @@ function wow_setup() {
 		'header' => __( 'Header Menu', 'ltple-theme' ),
 		'footer' => __( 'Footer Menu', 'ltple-theme' ),
 	) );
-}
-endif;
-add_action( 'after_setup_theme', 'wow_setup' );
+});
 
 /*********************************************************************************************
 SUPPORT THUMBNAILS
@@ -176,10 +186,13 @@ function wow_categorized_blog() {
 		return false;
 	}
 }
+
 /*********************************************************************************************
 REGISTER WIDGETIZED AREAS
 *********************************************************************************************/
-function wow_widgets_init() {
+
+add_action( 'widgets_init', function() {
+	
 	register_sidebar( array(
 		'name'          => __( 'Blog Sidebar', 'ltple-theme' ),
 		'id'            => 'sidebar-1',
@@ -188,6 +201,7 @@ function wow_widgets_init() {
 		'after_title'   => '</span></h1>',
 		'after_widget'  => '</aside>',
 	) );
+	
 	register_sidebar( array(
 		'name'          => __( 'Pages Sidebar', 'ltple-theme' ),
 		'id'            => 'sidebar-2',
@@ -196,6 +210,7 @@ function wow_widgets_init() {
 		'after_title'   => '</span></h1>',
 		'after_widget'  => '</aside>',
 	) );
+	
 	register_sidebar( array(
 		'name'          => __( 'Footer Widgets', 'ltple-theme' ),
 		'id'            => 'footerwidgets',
@@ -204,8 +219,7 @@ function wow_widgets_init() {
 		'before_title'  => '<h1>',
 		'after_title'   => '</h1><hr>',
 	) );
-}
-add_action( 'widgets_init', 'wow_widgets_init' );
+});
 
 /*********************************************************************************************
 COMMENTS
@@ -259,17 +273,18 @@ endif; // ends check for wow_comment()
 /*********************************************************************************************
 ENQUEUE COMMENTS
 *********************************************************************************************/
-function wow_enqueue_comments_reply() {
+
+add_action( 'comment_form_before', function() {
 	if( get_option( 'thread_comments' ) )  {
 		wp_enqueue_script( 'comment-reply' );
 	}
-}
-add_action( 'comment_form_before', 'wow_enqueue_comments_reply' );
+});
 
 /*********************************************************************************************
 CUSTOMIZER
 *********************************************************************************************/
-function wow_customize_register( $wp_customize ) {
+
+add_action('customize_register', function ( $wp_customize ) {
 
 	/*logo*/
 
@@ -306,8 +321,7 @@ function wow_customize_register( $wp_customize ) {
 			'type' => 'textarea',
 		));
 
-}
-add_action('customize_register', 'wow_customize_register');
+});
 
 function wow_sanitize_text( $input ) {
     return wp_kses_post( force_balance_tags( $input ) );

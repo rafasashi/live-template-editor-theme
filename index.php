@@ -54,111 +54,124 @@ wp_enqueue_script( 'wow-isotopejs', null, false );
 		else:
 			// Insert any content or load a template for no posts found.
 		endif;
+		
 		wp_reset_query();
+		
+		$sticky = get_option('sticky_posts');	
+		
+		if(!empty($sticky)) {
+			
 		?>
 
-
-		<?php // IF STICKY FOUND ?>
-
-		<?php $sticky = get_option('sticky_posts');	if (!empty($sticky)) { ?>
-
-
 		<div class="row tiles blogindex content-area">
-			<?php query_posts( array(
-						'post_type' => array('post'),
-						'paged' => $paged,
-						'ignore_sticky_posts' => 1,  'post__not_in' => get_option( 'sticky_posts' )
-					) );
-			if ( have_posts() ) : ?>
-					<?php /* Start the Loop */ ?>
-					<?php while ( have_posts() ) : the_post();
+			
+			<?php 
+			
+			query_posts( array(
+				'post_type' 			=> array('post'),
+				'paged' 				=> $paged,
+				'ignore_sticky_posts' 	=> 1,
+				'post__not_in' 			=> get_option( 'sticky_posts' )
+			) );
+			
+			if ( have_posts() ) :
+			
+				while ( have_posts() ) : the_post();
 						
-						global $post;
-					
-						echo'<div class="' . implode( ' ', get_post_class("col-xs-12 col-sm-6",$post->ID) ) . '" id="post-' . $post->ID . '">';
-							
-							echo'<div class="panel panel-default">';
+					global $post;
+				
+					echo'<div class="' . implode( ' ', get_post_class("col-xs-12 col-sm-6",$post->ID) ) . '" id="post-' . $post->ID . '">';
+						
+						echo'<div class="panel panel-default">';
 
-								echo'<div class="thumb_wrapper" style="background:url(' . get_the_post_thumbnail_url($post->ID, 'recentprojects-thumb') . ');background-size:cover;background-repeat:no-repeat;background-position:center center;"></div>'; //thumb_wrapper					
-								
-								echo'<div class="panel-body">';
-									
-									echo '<h3 style="height:50px;overflow:hiden;">' . $post->post_title . '</h3>';
-									
-									echo wow_get_custom_excerpt(170);
-									 
-								echo'</div>';
-								
-								echo'<div style="background:#fff;border:none;" class="panel-footer text-right">';
-									
-									echo'<a class="btn btn-sm btn-primary" href="' . get_permalink() . '" target="_self">Read more</a>';
-									
-								echo'</div>';
+							echo'<div class="thumb_wrapper" style="background:url(' . get_the_post_thumbnail_url($post->ID, 'recentprojects-thumb') . ');background-size:cover;background-repeat:no-repeat;background-position:center center;"></div>'; //thumb_wrapper					
 							
+							echo'<div class="panel-body">';
+								
+								echo '<h3 style="height:50px;overflow:hiden;">' . $post->post_title . '</h3>';
+								
+								echo wow_get_custom_excerpt(170);
+								 
 							echo'</div>';
 							
+							echo'<div style="background:#fff;border:none;" class="panel-footer text-right">';
+								
+								echo'<a class="btn btn-sm btn-primary" href="' . get_permalink() . '" target="_self">Read more</a>';
+								
+							echo'</div>';
+						
 						echo'</div>';
 						
-					endwhile; ?>
-				<?php else : ?>
-					<?php get_template_part( 'no-results', 'index' ); ?>
-				<?php endif; ?>
+					echo'</div>';
+						
+				endwhile;
+				else :
+					
+					get_template_part( 'no-results', 'index' );
+				
+				endif;
+				
+				?>
 		</div><!-- #content -->
 
-		<?php // IF STICKY NOT FOUND ?>
 		<?php } else { ?>
 
-
 		<div class="row tiles blogindex content-area">
+			
 			<?php
+			
 			query_posts( array(
-						'post_type' => array('post'),
-						'paged' => $paged,
-						'post__not_in' => array_merge($do_not_duplicate, get_option( 'sticky_posts' )),
-						'ignore_sticky_posts' => 1
-					) );
+				'post_type' 			=> array('post'),
+				'paged' 				=> $paged,
+				'post__not_in' 			=> array_merge($do_not_duplicate, get_option( 'sticky_posts' )),
+				'ignore_sticky_posts' 	=> 1
+			) );
+			
 			if ( have_posts() ) : ?>
-					<?php /* Start the Loop */ ?>
-					<?php while ( have_posts() ) : the_post();  $do_not_duplicate[] = $post->ID;
+										
+				<?php 
+				
+				while ( have_posts() ) : the_post();  $do_not_duplicate[] = $post->ID;
 
-						global $post;
-					
-						echo'<div class="' . implode( ' ', get_post_class("col-xs-12 col-sm-6",$post->ID) ) . '" id="post-' . $post->ID . '">';
-							
-							echo'<div class="panel panel-default">';
+					global $post;
+				
+					echo'<div class="' . implode( ' ', get_post_class("col-xs-12 col-sm-6",$post->ID) ) . '" id="post-' . $post->ID . '">';
+						
+						echo'<div class="panel panel-default">';
 
-								echo'<div class="thumb_wrapper" style="background:url(' . get_the_post_thumbnail_url($post->ID, 'recentprojects-thumb') . ');background-size:cover;background-repeat:no-repeat;background-position:center center;"></div>'; //thumb_wrapper					
-								
-								echo'<div class="panel-body">';
-									
-									echo '<h3 style="height:50px;overflow:hiden;">' . $post->post_title . '</h3>';
-									
-									echo wow_get_custom_excerpt(150) . ' [...]';
-									 
-								echo'</div>';
-								
-								echo'<div style="background:#fff;border:none;" class="panel-footer text-right">';
-									
-									echo'<a class="btn btn-sm btn-primary" href="' . get_permalink() . '" target="_self">Read more</a>';
-									
-								echo'</div>';
+							echo'<div class="thumb_wrapper" style="background:url(' . get_the_post_thumbnail_url($post->ID, 'recentprojects-thumb') . ');background-size:cover;background-repeat:no-repeat;background-position:center center;"></div>'; //thumb_wrapper					
 							
+							echo'<div class="panel-body">';
+								
+								echo '<h3 style="height:50px;overflow:hiden;">' . $post->post_title . '</h3>';
+								
+								echo wow_get_custom_excerpt(150) . ' [...]';
+								 
 							echo'</div>';
 							
-						echo'</div>';				
+							echo'<div style="background:#fff;border:none;" class="panel-footer text-right">';
+								
+								echo'<a class="btn btn-sm btn-primary" href="' . get_permalink() . '" target="_self">Read more</a>';
+								
+							echo'</div>';
 						
-					endwhile; ?>
+						echo'</div>';
+						
+					echo'</div>';				
 					
-				<?php else : ?>
-					<?php get_template_part( 'no-results', 'index' ); ?>
-				<?php endif; ?>
+				endwhile;
+					
+				else :
+					
+					//get_template_part( 'no-results', 'index' );
+				
+				endif; 
+				
+				?>
+				
 		</div><!-- #content -->
 
 		<?php } ?>
-
-		<?php // END QUERIES ?>
-
-
 
 			<div class="clearfix"></div>
 			<?php the_posts_pagination();?>
