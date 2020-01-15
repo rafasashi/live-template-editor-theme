@@ -5,7 +5,7 @@
 ?>
 
 
-<article <?php post_class("singlepost"); ?> id="post-<?php the_ID(); ?>">
+<article <?php post_class("singlepost"); ?> id="post-<?php the_ID(); ?>" style="min-height:100vh;">
 	
 	<div class="panel-header">
 	
@@ -13,15 +13,18 @@
 			<?php the_title(); ?>
 		</h1>
 		
-		<? if( has_post_thumbnail() ): ?>
+		<?php 
 		
-			<div class="post-image">
+		if( $image_url = wp_get_attachment_url( get_post_thumbnail_id() ) ){
+		
+			echo'<div class="post-image">';
 				
-				<img title="image title" alt="thumb image" class="wp-post-image" src="<?=wp_get_attachment_url( get_post_thumbnail_id() ); ?>" style="width:100%; height:auto;" />
+				echo'<img title="image title" alt="thumb image" class="wp-post-image" src="' . $image_url . '" style="width:100%; height:auto;" />';
 			
-			</div>
+			echo'</div>';
 			
-		<? endif; ?>
+		}
+		?>
 		
 	</div>
 	
