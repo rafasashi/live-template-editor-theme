@@ -4,7 +4,7 @@
  *
  * Extending Walker_Nav_Menu Class
  *
-
+ * @author Gabriel Vasile
  **/
   class Cwd_wp_bootstrapwp_Walker_Nav_Menu extends Walker_Nav_Menu {
  
@@ -34,20 +34,16 @@
     }
  
   }
-   
-  add_filter('nav_menu_css_class', function ($classes, $item){
-    
-	// CHANGE .current-menu-item .current-menu-parent .current-menu-ancestor INTO .active
-    
-	$classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
+ 
+  function cwd_wp_bootstrapwp_nav_menu_css_class($classes, $item) {
+    // CHANGE .current-menu-item .current-menu-parent .current-menu-ancestor INTO .active
+    $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
  
     // Add the .dropdown class to the list items that have children
-    
-	if ($item->hasChildren) {
-      
-		$classes[] = 'dropdown';
+    if ($item->hasChildren) {
+      $classes[] = 'dropdown';
     }
  
     return $classes;
-	
-  }, 10, 2);
+  }
+  add_filter('nav_menu_css_class', 'cwd_wp_bootstrapwp_nav_menu_css_class', 10, 2);

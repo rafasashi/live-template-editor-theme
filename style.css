@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:6.0.4.7
+Version:6.0.6.0
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -368,7 +368,7 @@ a.navbar-brand img {
 	display:none
 }
 .menushadow {
-	background:url(img/sha.png) no-repeat center center;
+	background:url(images/sha.png) no-repeat center center;
 	height:38px;
 	margin-bottom:6px;
 	display:none !important;
@@ -376,7 +376,7 @@ a.navbar-brand img {
 
 .headerdivider {
 	display:none !important;
-	background:url(img/dots.gif) repeat;
+	background:url(images/dots.gif) repeat;
 	height:7px;
 	margin-bottom:23px;
 	margin-top:15px;
@@ -998,7 +998,7 @@ section.homerecentportfolio h1.heading {
 	background:transparent;
 }
 .carousel_nav a.prev,.carousel_nav a.next {
-	background:url(img/carousel_arrows.png) no-repeat rgba(0,0,0,0.7);
+	background:url(images/carousel_arrows.png) no-repeat rgba(0,0,0,0.7);
 	width:24px;
 	height:24px;
 	display:block;
@@ -1377,7 +1377,7 @@ img.attachment-recentprojects-thumb:hover {
 #search a,#search input.search-submit {
 	display:inline-block;
 	float:left;
-	background:#1abc9c url(img/part-btn-search.png) no-repeat center center;
+	background:#1abc9c url(images/part-btn-search.png) no-repeat center center;
 	width:50px;
 	height:50px;
 	-webkit-transition:all 0.3s ease;
@@ -3061,6 +3061,7 @@ a.noshow:hover::before {
 	height: auto;
 }
 
+/*
 [class*='tip-'] {
 	display: block;
 	width: 90%;
@@ -3076,6 +3077,8 @@ a.noshow:hover::before {
 	display: block;
 	margin: 0 auto;
 }
+*/
+
 
 .nexus {
 	display: block;
@@ -3300,16 +3303,6 @@ footer.entry-meta,.wowmetaposts {
 	position: relative;
 	font-size: 17px;
 	margin: 20px auto 4px;
-	border: 1px solid #cccccc;
-	background: rgb(255,255,255);
-	background: -moz-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
-	background: -webkit-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
-	background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#e5e5e5',GradientType=0);
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	box-shadow: 0 1px 2px #999999;
-	-webkit-box-shadow: 0 1px 2px #999999;
 }
 
 [class*='edplan-'] i {
@@ -3324,18 +3317,6 @@ footer.entry-meta,.wowmetaposts {
 }
 
 /*** the button shown on the standalone plan post ***/
-#plan_form {
-	width: 70%;
-	margin: 20px auto 14px;
-	padding: 10px;
-	text-align: center;
-	font-size: 19px;
-}
-
-#plan_storage {
-	font-size: 19px;
-	color: #3b8faa;
-}
 
 a.totop {
 	background-color: #3b8faa;
@@ -3706,44 +3687,56 @@ p.wpf-stat-other span:nth-child(2){display:none!important;}
 /* bbpress */
 
 #bbpress-forums {
-    background: transparent;
-    clear: both;
-    margin: 20px;
-    overflow: hidden;
-    font-size: 15px;
+    background: transparent !important;
+    clear: both !important;
+    margin: 20px !important;
+    overflow: hidden !important;
+    font-size: 17px !important;
 }
 
 #bbpress-forums ul.bbp-lead-topic, #bbpress-forums ul.bbp-topics, #bbpress-forums ul.bbp-forums, #bbpress-forums ul.bbp-replies, #bbpress-forums ul.bbp-search-results {
-    font-size: 15px;
+    font-size: 17px !important;
 }
 
 div.bbp-breadcrumb, div.bbp-topic-tags {
-    font-size: 15px;
-    padding: 10px 0px;
+    font-size: 17px !important;
+    padding: 10px 0px !important;
+}
+
+#bbpress-forums .bbp-forum-info .bbp-forum-content, #bbpress-forums p.bbp-topic-meta {
+    font-size: 14px !important;
+}
+
+#bbpress-forums li.bbp-body ul.forum, #bbpress-forums li.bbp-body ul.topic {
+    padding: 20px !important;
 }
 
 #bbpress-forums #subscription-toggle span, #bbpress-forums #favorite-toggle span {
-    margin: 9px 5px 9px 5px;
-    font-size: 10px;
-    padding: 0px 7px;
-    background: #f7f7f7;
-    display: inline-block;
+    margin: 9px 5px 9px 5px !important;
+    font-size: 10px !important;
+    padding: 0px 7px !important;
+    background: #f7f7f7 !important;
+    display: inline-block !important;
 }
 
 #bbpress-forums fieldset.bbp-form legend {
-    padding: 10px;
-    background: #fbfbfb;
+    padding: 10px !important;
+    background: #fbfbfb !important;
 }
 
 #bbpress-forums .bbp-template-notice .avatar, #bbpress-forums .bbp-topic-meta .avatar {
-    max-width: 100%;
-    border: 1px solid #eeeeee;
-    margin-top: -8px;
-    margin-bottom: 0;
-    padding: 0;
-    line-height: 0;
-    width: 20px;
-    height: auto;
-    background: #F9F9F9;
-    display: inline-block;
+    max-width: 100% !important;
+    border: 1px solid #eeeeee !important;
+    margin-top: -8px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    width: 20px !important;
+    height: auto !important;
+    background: #F9F9F9 !important;
+    display: inline-block !important;
+}
+
+#bbpress-forums div.bbp-forum-content, #bbpress-forums div.bbp-topic-content, #bbpress-forums div.bbp-reply-content {
+    line-height: 30px !important;
 }
