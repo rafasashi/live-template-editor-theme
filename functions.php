@@ -22,10 +22,6 @@ add_action('wp_enqueue_scripts', function(){
 	
 	wp_enqueue_style('ltple-bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
    
-	// fontawesome
-	
-	wp_enqueue_style('ltple-fontawesome', get_template_directory_uri() . '/css/font-awesome.css', false ,'4.7.0');
-	
 	// animate
 	
 	wp_enqueue_style('ltple-animate', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');

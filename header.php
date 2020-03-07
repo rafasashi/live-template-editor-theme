@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 
 	$is_profile_page = false;
@@ -25,7 +24,8 @@
 	}
 	
 	define('LTPLE_IS_PROFILE_PAGE',$is_profile_page);
-?>		
+?>
+<!DOCTYPE html>	
 <html <?php language_attributes(); ?> class="<?php echo apply_filters('ltple_document_classes','ltple-theme'); ?>">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
@@ -39,12 +39,12 @@
 	<div id="ltple-wrapper" class="boxedcontent" style="position:absolute;z-index:auto;border:none;">
 		
 	<?php 
-
+		
 		if( LTPLE_IS_PROFILE_PAGE ){
 			
 			include_once('navbar-profile.php'); 
 		}
-		else{
+		elseif( empty($_REQUEST['output']) || $_REQUEST['output'] != 'widget' ){
 			
 			include_once('navbar.php'); 
 		}

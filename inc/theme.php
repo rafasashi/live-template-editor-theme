@@ -854,7 +854,7 @@ class LTPLE_Theme {
 	
 	public function enqueue_fontawesome_style() {
 
-		wp_register_style( 'fontawesome', trailingslashit( get_template_directory_uri() ) . 'css/fontawesome-all.min.css' , array(), '5.8.2', 'all' );
+		wp_register_style( 'fontawesome', trailingslashit( get_template_directory_uri() ) . 'css/font-awesome.css' , array(), '4.7.0', 'all' );
 		wp_enqueue_style( 'fontawesome' );
 	}
 	

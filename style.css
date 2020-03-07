@@ -4,7 +4,7 @@ Theme URI:http://ltple.recuweb.com/
 Author:Rafasashi
 Author URI:https://github.com/rafasashi
 Description:Build your beautiful blog in no time with ltple-theme, a clean masonry, responsive theme.
-Version:6.0.6.0
+Version:6.0.6.2
 Text Domain:ltple-theme
 Domain Path:/languages/
 Tags:white,two-columns,right-sidebar,translation-ready,featured-images,custom-background,responsive-layout,custom-menu,editor-style,threaded-comments
@@ -21,7 +21,6 @@ body {
 	color:#666;
 	-webkit-font-smoothing:antialiased;
 	line-height:1.80em;
-	background-color:#182f42;
 	font-family:Open Sans, Helvetica;
 }
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
@@ -2930,7 +2929,6 @@ body {
 	background-size: 100%;
 	background-position: top center;
 	background-attachment: fixed;
-	background-color: #000000;
 }
 
 .xcr::-webkit-scrollbar {
@@ -3357,70 +3355,6 @@ a:hover.totop {
 	margin-left: 2px;
 }
 
-/*** Graphic Gallery background color for header elements***/
-.bg-black {
-	display: block;
-	width: 100%;
-	height: auto;
-	padding: 20px;
-	background-color: #000000;
-	background-image: url(//dexdan.files.wordpress.com/2013/08/bg1_black.jpg);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	background-attachment: fixed;
-}
-
-.bg-color {
-	display: block;
-	width: 100%;
-	height: auto;
-	padding: 20px;
-	background-color: #000000;
-	background-image: url(//dexdan.files.wordpress.com/2016/09/transparent_bg.png);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	background-attachment: fixed;
-}
-
-.bg-light {
-	display: block;
-	width: 100%;
-	height: auto;
-	padding: 20px;
-	background-color: #ffffff;
-	background-image: url(//editbio.files.wordpress.com/2015/05/bg1.png);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	background-attachment: fixed;
-}
-
-.bg-black img,.bg-light img,.bg-color img {
-	display: block;
-	width: 100%;
-	height: auto;
-	margin: 5px auto -2px;
-}
-
-.bg-black code,.bg-light code,.bg-color code {
-	padding: 3px 6px;
-	font-size: 15px;
-}
-
-.bg-default {
-	display: block;
-	width: 90%;
-	height: auto;
-	margin: 10px auto;
-	padding: 20px;
-}
-
-#wpforo-wrap .wpforo-content {
-	width: 99%;
-	float: left;
-	padding: 0;
-	box-sizing: border-box;
-}
-
 /*** Footer first widget section About ***/
 .logo_footer {
 	display: block;
@@ -3512,21 +3446,6 @@ a:hover.totop {
  filter: grayscale(100%);transition:all .3s;-webkit-transition:all .3s;-mox-transition:all .3s;-o-transition:all .3s;-ms-transition:all .3s;}
 [class*='logos-'] img:hover{opacity:1;-webkit-filter: grayscale(0); 
  filter: grayscale(0);position:relative;}
-/*** Forum menu on top of website***/
-#wpforo-wrap {
-    font-size: 15px;
-    width: 100%;
-    padding: 0;
-    margin: -50px 0 0;
-	padding: 0 20px;
-}
-.wpfcl-1{color:#ce125a}
-
-#wpforo-wrap .wpforo-post .wpf-left .wpforo-membertoggle i {display:none!important;
-    color: #3f7796;
-}
-
-p.wpf-stat-other span:nth-child(2){display:none!important;}
 
 /** documentation **/
 
