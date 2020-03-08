@@ -34,6 +34,8 @@ class LTPLE_Theme {
 		
 		$this->_file = $file;
 		
+		$this->editor = new LTPLE_Editor($this->_file);
+		
 		//Customizer
 		
 		add_action('customize_register', array($this,'customize_register'));
