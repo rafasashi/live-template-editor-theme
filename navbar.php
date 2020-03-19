@@ -12,8 +12,7 @@
 	</div>
 </div>
 
-<div class="container">
-<nav class="navbar" role="navigation">
+<nav class="navbar" role="navigation" style="margin:0;border-radius:0;">
 	<?php
 		if ( has_nav_menu( 'header' ) ) {
 		  wp_nav_menu( array(
@@ -158,4 +157,3 @@
 	</div>
 </nav>
 <div class="menushadow"></div>
-</div>

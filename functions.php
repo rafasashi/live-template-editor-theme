@@ -1,44 +1,10 @@
 <?php
 
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/theme.php';
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/editor.php';
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/custom-controls.php';
+include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-theme.php';
+include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-editor.php';
+include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-custom-controls.php';
 
 $theme = LTPLE_Theme();
-
-/*********************************************************************************************
-Styles & Scripts
-*********************************************************************************************/
-
-add_action('wp_enqueue_scripts', function(){
-	
-	$theme = wp_get_theme();
-	
-	$version = $theme->get('Version');
-	
-	wp_enqueue_script('ltple-bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array('jquery'),'3.3.5', true );
-	wp_enqueue_script('ltple-easing-js', get_template_directory_uri() . '/js/jquery.easing.1.3.js', array('jquery'),'1.0.0', true );
-	wp_enqueue_script('ltple-common-js', get_template_directory_uri() . '/js/common.js', array('jquery'),'1.0.0', true );
-	wp_register_script('ltple-isotope-js', get_template_directory_uri() .  '/js/isotope.js', array('jquery'),'1.0.0', true );
-	
-	wp_enqueue_style('ltple-bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css', false ,'3.0.3');
-   
-	// animate
-	
-	wp_enqueue_style('ltple-animate', get_template_directory_uri() . '/css/animate.css', false ,'3.0.0');
-	
-	// theme
-	
-	wp_enqueue_style('ltple-theme-style', get_stylesheet_uri(), array('ltple-bootstrap-css'), $version ); //style.css
-	
-},0);
-
-add_action('wp_enqueue_scripts', function(){
-
-    wp_dequeue_style('wpb-faa-css');
-	wp_deregister_style('wpb-faa-css');
-	
-},9999);
 
 /*********************************************************************************************
 SETUP, HEADER & FOOTER MENUS
@@ -332,7 +298,7 @@ function wow_sanitize_text( $input ) {
 /*********************************************************************************************
 REQUIRES
 *********************************************************************************************/
-require_once( get_template_directory() . '/inc/nav.php');
+require_once( get_template_directory() . '/inc/class-ltple-nav.php');
 
 /*********************************************************************************************
 WOO COMMERCE SUPPORT
