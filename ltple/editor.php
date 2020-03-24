@@ -1,6 +1,6 @@
 <?php
 
-$theme = LTPLE_Theme::instance();
+$theme = LTPLE_Theme();
 
 echo '<!DOCTYPE>';
 echo '<html style="margin:0!important;overflow-x:hidden;">';
@@ -21,7 +21,7 @@ echo '<html style="margin:0!important;overflow-x:hidden;">';
 		echo '<link rel="dns-prefetch" href="//s.w.org">';
  
 		echo '<title>Live Template Editor</title>';
-
+		
 		wp_head();
 		
 	echo '</head>';
@@ -30,25 +30,24 @@ echo '<html style="margin:0!important;overflow-x:hidden;">';
 		
 		echo '<div id="ltple-wrapper" class="boxedcontent" style="position:absolute;z-index:auto;border:none;background:#fbfbfb!important;">';
 						
-			include( $theme->dir . '/ltple/navbar.php' );
-			 
-			// get iframe url
+			include( 'navbar.php' );
 			
-			echo apply_filters('ltple_editor_navbar','');
+			if( $layer = $theme->editor->get_layer() ){
 			
-			// output editor iframe
-			
-			echo'<div class="loadingIframe" style="width:100%;position:absolute;top:45px;background-position: 50% center;background-repeat: no-repeat;background-image:url(\''. $theme->assets_url .'images/loader.gif\');height:64px;"></div>';
-			
-			echo'<iframe id="editorIframe" src="' . $theme->editor->get_iframe_url() . '" style="position: absolute;width: 100%;top: 45px;bottom: 0;border:0;height: 1300px;overflow: hidden;"></iframe>';
-
-			//editor settings
-
-			echo'<script id="LiveTplEditorSettings">' .PHP_EOL;
+				// output editor iframe
 				
-				echo $theme->editor->get_js_settings();
+				echo'<div class="loadingIframe" style="width:100%;position:absolute;top:45px;background-position: 50% center;background-repeat: no-repeat;background-image:url(\''. $theme->assets_url .'images/loader.gif\');height:64px;"></div>';
 				
-			echo'</script>' . PHP_EOL;
+				echo'<iframe id="editorIframe" src="' . $theme->editor->get_iframe_url($layer) . '" style="position: absolute;width: 100%;top: 45px;bottom: 0;border:0;height: 1300px;overflow: hidden;"></iframe>';
+
+				//editor settings
+
+				echo'<script id="LiveTplEditorSettings">' .PHP_EOL;
+					
+					echo $theme->editor->get_js_settings($layer);
+					
+				echo'</script>' . PHP_EOL;
+			}
 			
 		echo '</div>';
 		

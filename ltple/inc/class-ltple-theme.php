@@ -50,11 +50,11 @@ class LTPLE_Theme {
 		
 		$this->_file 	= $file;
 		
-		$this->dir 		= dirname($file,2);
-		
+		$this->dir 		= get_template_directory();
+
 		$this->assets_url 	= trailingslashit( get_template_directory_uri() );
 				
-		$this->editor 	= new LTPLE_Editor($this);
+		$this->editor 		= new LTPLE_Editor($this);
 		
 		//Customizer
 		
@@ -98,10 +98,8 @@ class LTPLE_Theme {
 				'footer' => __( 'Footer', 'ltple-theme' ),
 			));
 			
-			require_once( $this->dir . '/inc/class-ltple-nav.php');
-		
-			require_once( $this->dir . '/inc/class-ltple-comments.php');
-
+			include_once 'class-ltple-nav.php';
+			include_once 'class-ltple-comments.php';
 		});
 		
 		add_filter( 'init', array($this,'init') );		
@@ -354,8 +352,8 @@ class LTPLE_Theme {
 	
 	public function get_form(){
 		
-		require_once( $this->dir . '/inc/class-ltple-form.php');
-							
+		include_once 'class-ltple-form.php';
+		
 		$this->form = new LTPLE_Theme_Contact_Form($this);
 	}
 	
@@ -1081,11 +1079,4 @@ class LTPLE_Theme {
 	public function __wakeup() {
 		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?' ), $this->_version );
 	}
-}
-
-function LTPLE_Theme( $args = array() ) {
-	
-	$instance = LTPLE_Theme::instance( __FILE__, $args );
-
-	return $instance;
 }

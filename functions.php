@@ -1,10 +1,6 @@
 <?php
 
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-theme.php';
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-editor.php';
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-custom-controls.php';
-
-$theme = LTPLE_Theme();
+include_once trailingslashit( dirname(__FILE__) ) . 'ltple/functions.php';
 
 /*********************************************************************************************
 SETUP, HEADER & FOOTER MENUS
@@ -294,11 +290,6 @@ add_action('customize_register', function ( $wp_customize ) {
 function wow_sanitize_text( $input ) {
     return wp_kses_post( force_balance_tags( $input ) );
 }
-
-/*********************************************************************************************
-REQUIRES
-*********************************************************************************************/
-require_once( get_template_directory() . '/inc/class-ltple-nav.php');
 
 /*********************************************************************************************
 WOO COMMERCE SUPPORT
