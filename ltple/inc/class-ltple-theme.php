@@ -8,6 +8,7 @@ class LTPLE_Theme {
 	
 	private static $_instance = null;
 	
+	var $_info 		= null;
 	var $_version 	= null;
 	var $_file 		= null;
 	var $dir 		= null;
@@ -44,9 +45,9 @@ class LTPLE_Theme {
 
 	public function __construct( $file = '', $args = array() ) {
 		
-		$this->theme 	= wp_get_theme();
+		$this->_info 	= wp_get_theme();
 		
-		$this->_version = $this->theme->get('Version');		
+		$this->_version = $this->_info->get('Version');		
 		
 		$this->_file 	= $file;
 		
@@ -54,8 +55,6 @@ class LTPLE_Theme {
 
 		$this->assets_url 	= trailingslashit( get_template_directory_uri() );
 				
-		$this->editor 		= new LTPLE_Editor($this);
-		
 		//Customizer
 		
 		add_action('customize_register', array($this,'customize_register'));
@@ -97,59 +96,13 @@ class LTPLE_Theme {
 				'header' => __( 'Header', 'ltple-theme' ),
 				'footer' => __( 'Footer', 'ltple-theme' ),
 			));
-			
-			include_once 'class-ltple-nav.php';
-			include_once 'class-ltple-comments.php';
 		});
 		
 		add_filter( 'init', array($this,'init') );		
 	
 		add_filter( 'wp_nav_menu_items', array($this,'get_searchbar_menu'), 8888, 2 );
-		
-		add_action('init', array($this,'init_frontend'));
 	}
-	
-	public function init_frontend() {
-		
-		if( !is_admin() ){
-			
-			add_action('wp_enqueue_scripts', array($this,'enqueue_theme_styles'),0);
-			add_action('wp_enqueue_scripts', array($this,'enqueue_theme_scripts'),0);
 
-			add_action('wp_enqueue_scripts', function(){
-
-				wp_dequeue_style('wpb-faa-css');
-				wp_deregister_style('wpb-faa-css');
-				
-			},9999);
-		}
-	}
-	
-	public function enqueue_theme_styles(){
-
-		// animate
-		
-		wp_enqueue_style($this->_token . '-animate', esc_url( $this->assets_url ) . 'css/animate.css', false ,$this->_version);
-		
-		// theme style
-		
-		$this->enqueue_main_style();
-	}
-	
-	public function enqueue_main_style(){
-		
-		wp_enqueue_style($this->_token . '-theme-style', get_stylesheet_uri(), array('ltple-bootstrap-css'), $this->_version ); //style.css		
-	}
-	
-	public function enqueue_theme_scripts(){
-
-		wp_enqueue_script($this->_token . '-easing-js', esc_url( $this->assets_url ) . 'js/jquery.easing.1.3.js', array('jquery'),$this->_version, true );
-		
-		wp_enqueue_script($this->_token . '-common-js', esc_url( $this->assets_url ) . 'js/common.js', array('jquery'),$this->_version, true );
-		
-		wp_register_script($this->_token . '-isotope-js', esc_url( $this->assets_url ) . 'js/isotope.js', array('jquery'),$this->_version, true );
-	}
-	
 	public function init(){	
 		
 		// get form
@@ -1004,7 +957,6 @@ class LTPLE_Theme {
 				array( 'url' => 'youtube.com', 'icon' => 'fab fa-youtube', 'title' => esc_html__( 'Subscribe to me on YouTube', 'ltple-theme' ), 'class' => 'youtube' ),
 			));
 					
-
 			foreach( $social_urls as $key => $value ) {
 				
 				if ( !empty( $value ) ) {

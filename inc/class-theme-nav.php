@@ -4,7 +4,6 @@
  *
  * Extending Walker_Nav_Menu Class
  *
- * @author Gabriel Vasile
  **/
   class Cwd_wp_bootstrapwp_Walker_Nav_Menu extends Walker_Nav_Menu {
  

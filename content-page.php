@@ -12,11 +12,16 @@
 		
 		the_content();
 		
+		?>
+
+		<?php 
+		
 		wp_link_pages( array(
 			'before' => '<div class="page-links"><div class="col-md-1"></div><div class="col-md-10">' . __( 'Pages:', 'ltple-theme' ),
 			'after'  => '</div><div class="col-md-1"></div></div>',
 		) );
 		
 		?>
+		
 	</div><!-- .entry-content -->
 </article><!-- #post-## -->

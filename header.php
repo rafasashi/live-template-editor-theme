@@ -54,4 +54,3 @@
 			echo apply_filters('ltple_floating_buttons','');
 			
 		echo '</div>';
-		

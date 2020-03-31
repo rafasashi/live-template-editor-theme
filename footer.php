@@ -4,7 +4,7 @@
  */
 
 // Gets all the scripts included by wordpress, wordpress plugins or functions.php
-	
+
 	if( empty($_REQUEST['output']) || $_REQUEST['output'] != 'widget' ){
 	
 		if( !LTPLE_IS_PROFILE_PAGE && is_active_sidebar( 'footerwidgets' ) ) {

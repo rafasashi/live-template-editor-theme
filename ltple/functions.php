@@ -1,7 +1,6 @@
 <?php
 
 include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-theme.php';
-include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-editor.php';
 include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-ltple-custom-controls.php';
 
 function LTPLE_Theme( $args = array() ) {

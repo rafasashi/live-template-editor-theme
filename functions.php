@@ -1,6 +1,60 @@
 <?php
-
+/*********************************************************************************************
+THEME & EDITOR
+*********************************************************************************************/
 include_once trailingslashit( dirname(__FILE__) ) . 'ltple/functions.php';
+
+/*********************************************************************************************
+NAV & COMMENTS
+*********************************************************************************************/
+add_action( 'after_setup_theme', function() {
+	
+	include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-theme-nav.php';
+	include_once trailingslashit( dirname(__FILE__) ) . 'inc/class-theme-comments.php';
+});
+
+/*********************************************************************************************
+STYLES & SCRIPTS
+*********************************************************************************************/
+add_action('init',function(){
+	
+	if(!is_admin()){
+		
+		add_action('wp_enqueue_scripts',function(){
+			
+			$version = wp_get_theme()->get('Version');		
+			
+			$asset_url = esc_url( trailingslashit( get_template_directory_uri() ) );
+			
+			// animate
+			
+			wp_enqueue_style('theme-animate', $asset_url . 'css/animate.css', false ,$version);
+			
+			// bootstrap
+			
+			wp_register_style('ltple-bootstrap-css', $asset_url . 'css/bootstrap.min.css', array(),$version);
+			wp_enqueue_style('ltple-bootstrap-css' );				
+			
+			// style.css
+			
+			wp_enqueue_style('theme-style', get_stylesheet_uri(), array('ltple-bootstrap-css'),$version);
+			
+			// enqueue scripts
+			
+			wp_enqueue_script('theme-easing-js', $asset_url . 'js/jquery.easing.1.3.js', array('jquery'),$version, true );
+			wp_enqueue_script('theme-common-js', $asset_url . 'js/common.js', array('jquery'),$version, true );
+			wp_register_script('theme-isotope-js', $asset_url . 'js/isotope.js', array('jquery'),$version, true );
+
+		},0);
+		
+		add_action('wp_enqueue_scripts', function(){
+
+			wp_dequeue_style('wpb-faa-css');
+			wp_deregister_style('wpb-faa-css');
+			
+		},999999);
+	}
+});
 
 /*********************************************************************************************
 SETUP, HEADER & FOOTER MENUS
