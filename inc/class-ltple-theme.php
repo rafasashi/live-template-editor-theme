@@ -19,7 +19,7 @@ class LTPLE_Theme {
 	var $editor 	= null;
 	var $form 		= null;
 	
-	var $defaults 		= array();
+	var $defaults 		= null;
 	var $panels 		= array();
 	var $sections 		= array();
 	var $customizers 	= array();
@@ -191,9 +191,12 @@ class LTPLE_Theme {
 
 			$locations = self::get_mod('nav_menu_locations');
 			
-			$locations['header'] = $menu->term_id;
+			if( empty($locations['header']) ){
 			
-			set_theme_mod( 'nav_menu_locations', $locations );
+				$locations['header'] = $menu->term_id;
+			
+				set_theme_mod( 'nav_menu_locations', $locations );
+			}
 		}
 		
 		// generate footer menu
@@ -231,9 +234,12 @@ class LTPLE_Theme {
 
 			$locations = self::get_mod('nav_menu_locations');
 			
-			$locations['footer'] = $menu->term_id;
+			if( empty($locations['footer']) ){
 			
-			set_theme_mod( 'nav_menu_locations', $locations );
+				$locations['footer'] = $menu->term_id;
+			
+				set_theme_mod( 'nav_menu_locations', $locations );
+			}
 		}
 		
 		add_filter('nav_menu_css_class', function ($classes, $item, $args) {
@@ -318,16 +324,33 @@ class LTPLE_Theme {
 		}
 		
 		//set panels
+		
+		$this->set_panel('theme_style_panel', array(
 
+			'title' 		=> 'Main Style',
+			'description' 	=> 'Adjust the main theme style',
+			'priority'		=> 100,
+		));
+		
+		/*
 		$this->set_panel('header_naviation_panel', array(
 
 			'title' 		=> 'Header & Footer',
 			'description' 	=> 'Adjust your Header, Footer and Navigation sections.',
 			'priority'		=> 100,
 		));
+		*/
 
 		//set sections
+		
+		$this->set_section('main_background_section', array(
 
+			'title' 		=> 'Background',
+			'description' 	=> 'Change the main background of the theme',
+			'panel' 		=> 'theme_style_panel',
+		));				
+		
+		/*
 		$this->set_section('social_icons_section', array(
 
 			'title' 		=> 'Social Icons',
@@ -347,10 +370,59 @@ class LTPLE_Theme {
 			'title' 		=> 'Search',
 			'description' 	=> 'Add a search icon to your primary naigation menu.',
 			'panel' 		=> 'header_naviation_panel',
-		));		
+		));
+		*/
 
 		//set customizers
 		
+		/*
+		$theme->set_customizer('ltple_call_action_bkg', array(
+			
+			'setting' 	=> array(
+			
+				'default'	=> get_template_directory_uri() . '/images/la_rsvp.jpg',
+			),
+			'class' 	=> 'WP_Customize_Image_Control',
+			'control'	=> array(
+			
+				'label' 	=> 'Background',
+				'section' 	=> 'home_page_call_action',
+			),
+			'partial' 	=> array(
+			
+				'render_callback' => function($option_name) {
+					
+					if( $bkg = LTPLE_Theme::get_mod($option_name) ){
+					
+						echo'<div class="'.$option_name.'">';
+						
+							echo '<img class="card-img" src="' . $bkg . '">';
+						
+						echo'</div>';
+					}
+				}
+			),
+		));
+		*/
+		
+		$this->set_customizer('main_background_image', array(
+
+			'class' 	=> 'WP_Customize_Image_Control',
+			'control' 	=> array(
+			
+				'label' 		=> 'Background Image',
+				'section' 		=> 'main_background_section',
+			),
+			'partial' 	=> array(
+			
+				'render_callback' => function($option_name){
+					
+					return !empty($option_name) ? 'url(' . LTPLE_Theme::get_mod($option_name) . ')' : 'none';
+				},			
+			),
+		));		
+		
+		/*
 		$this->set_customizer('social_newtab', array(
 
 			'setting' 	=> array(
@@ -649,24 +721,50 @@ class LTPLE_Theme {
 			),
 		));
 
+		*/
+		
 		// set defaults values
 		
-		$defaults = array();
+		$this->get_default_mods();
+	}
+	
+	public function get_default_mod($option_name){
 		
-		if( !empty($this->customizers) ){
+		$default = '';
 		
-			foreach( $this->customizers as $name => $customizer ){
+		if( $defaults = $this->get_default_mods() ){
+			
+			if( isset($defaults[$option_name]) ){
 				
-				if( isset($customizer['setting']['default']) ){
-					
-					$defaults[$name] = $customizer['setting']['default'];
-				}
+				$default = $defaults[$option_name];
 			}
 		}
 		
-		$this->defaults = apply_filters( 'ltple_theme_customizer_defaults', $defaults );
+		return $default;
 	}
 	
+	public function get_default_mods(){
+		
+		if( is_null($this->defaults) ){
+			
+			$defaults = array();
+			
+			if( !empty($this->customizers) ){
+			
+				foreach( $this->customizers as $name => $customizer ){
+					
+					if( isset($customizer['setting']['default']) ){
+						
+						$defaults[$name] = $customizer['setting']['default'];
+					}
+				}
+			}
+			
+			$this->defaults = apply_filters( 'ltple_theme_customizer_defaults', $defaults );		
+		}
+		
+		return $this->defaults;
+	}
 	public function set_panel($option_name,$settings){
 		
 		if(!isset($this->panels[$option_name])){
@@ -730,11 +828,8 @@ class LTPLE_Theme {
 				
 				// add setting
 				
-				if( empty($customizer['setting']['default']) && !empty($this->defaults[$customizer_name]) ){
-					
-					$customizer['setting']['default'] = $this->defaults[$customizer_name];
-				}
-				
+				$customizer['setting']['default'] = $this->get_default_mod($customizer_name);
+
 				if( empty($customizer['setting']['sanitize_callback']) ){
 					
 					$sanitize_callback = 'ltple_theme_text_sanitization';
@@ -899,7 +994,7 @@ class LTPLE_Theme {
 			return self::$_instance->customizers[$option_name]['partial']['render_callback']($args);
 		}
 	}
-	
+
 	public static function get_mod($option_name){
 
 		$default = false;

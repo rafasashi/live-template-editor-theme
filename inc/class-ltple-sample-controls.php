@@ -13,8 +13,8 @@
 	$this->set_section('upsell_section', array(
 		
 		'class'				=> 'LTPLE_Theme_Upsell_Section',
-		'title' 			=> __( 'Premium Addons Available', 'skyrocket' ),
-		'url' 				=> 'https://skyrocketthemes.com',
+		'title' 			=> __( 'Premium Addons Available', 'ltple-theme' ),
+		'url' 				=> 'https://wordpress.recuweb.com',
 		'backgroundcolor' 	=> '#344860',
 		'textcolor' 		=> '#fff',
 		'priority' 			=> 0,
