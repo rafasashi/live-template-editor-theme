@@ -15,11 +15,13 @@ Template Name: Landing Page
 </head> 
 <body <?php body_class('landing-page'); ?>>
 	
-	<?php while ( have_posts() ) : the_post(); ?>
+	<?php
+		while ( have_posts() ) : the_post();
 		
-		<?php get_template_part( 'content', 'page' ); ?>
-	
-	<?php endwhile;?>	
+			the_content();
+			
+		endwhile; // End of the loop.
+	?>
 
 </body>
 

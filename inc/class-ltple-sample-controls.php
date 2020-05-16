@@ -14,7 +14,7 @@
 		
 		'class'				=> 'LTPLE_Theme_Upsell_Section',
 		'title' 			=> __( 'Premium Addons Available', 'ltple-theme' ),
-		'url' 				=> 'https://wordpress.recuweb.com',
+		'url' 				=> 'https://code.recuweb.com',
 		'backgroundcolor' 	=> '#344860',
 		'textcolor' 		=> '#fff',
 		'priority' 			=> 0,

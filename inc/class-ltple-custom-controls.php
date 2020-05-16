@@ -12,8 +12,11 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 	class LTPLE_Theme_Custom_Control extends WP_Customize_Control {
 		
 		protected function get_theme_resource_url() {
+			
 			if( strpos( wp_normalize_path( __DIR__ ), wp_normalize_path( WP_PLUGIN_DIR ) ) === 0 ) {
+				
 				// We're in a plugin directory and need to determine the url accordingly.
+				
 				return plugin_dir_url( __DIR__ );
 			}
 
@@ -649,22 +652,33 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 * Get our list of fonts from the json file
 		 */
 		public function __construct( $manager, $id, $args = array(), $options = array() ) {
+			
 			parent::__construct( $manager, $id, $args );
+			
 			// Get the font sort order
+			
 			if ( isset( $this->input_attrs['orderby'] ) && strtolower( $this->input_attrs['orderby'] ) === 'popular' ) {
+				
 				$this->fontOrderBy = 'popular';
 			}
+			
 			// Get the list of Google fonts
+			
 			if ( isset( $this->input_attrs['font_count'] ) ) {
 				if ( 'all' != strtolower( $this->input_attrs['font_count'] ) ) {
 					$this->fontCount = ( abs( (int) $this->input_attrs['font_count'] ) > 0 ? abs( (int) $this->input_attrs['font_count'] ) : 'all' );
 				}
 			}
+			
 			$this->fontList = $this->ltple_theme_getGoogleFonts( 'all' );
+			
 			// Decode the default json font value
+			
 			$this->fontValues = json_decode( $this->value() );
+			
 			// Find the index of our default font within our list of Google fonts
-			$this->fontListIndex = $this->ltple_theme_getFontIndex( $this->fontList, $this->fontValues->font );
+			
+			$this->fontListIndex = $this->ltple_theme_getFontIndex( $this->fontList, $this->fontValues );
 		}
 		/**
 		 * Enqueue our scripts and styles
@@ -721,54 +735,62 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 								echo $fontListStr;
 							?>
 						</select>
+						
+						<a href="https://fonts.google.com/" target="_blank">Preview all Fonts</a>
+					
 					</div>
-					<div class="customize-control-description">Select weight &amp; style for regular text</div>
-					<div class="weight-style">
-						<select class="google-fonts-regularweight-style">
-							<?php
-								foreach( $this->fontList[$this->fontListIndex]->variants as $key => $value ) {
-									echo '<option value="' . $value . '" ' . selected( $this->fontValues->regularweight, $value, false ) . '>' . $value . '</option>';
-								}
-							?>
-						</select>
-					</div>
-					<div class="customize-control-description">Select weight for <italic>italic text</italic></div>
-					<div class="weight-style">
-						<select class="google-fonts-italicweight-style" <?php disabled( in_array( 'italic', $this->fontList[$this->fontListIndex]->variants ), false ); ?>>
-							<?php
-								$optionCount = 0;
-								foreach( $this->fontList[$this->fontListIndex]->variants as $key => $value ) {
-									// Only add options that are italic
-									if( strpos( $value, 'italic' ) !== false ) {
-										echo '<option value="' . $value . '" ' . selected( $this->fontValues->italicweight, $value, false ) . '>' . $value . '</option>';
-										$optionCount++;
+					
+					<div style="display:none;">
+						
+						<div class="customize-control-description">Select weight &amp; style for regular text</div>
+						<div class="weight-style">
+							<select class="google-fonts-regularweight-style">
+								<?php
+									foreach( $this->fontList[$this->fontListIndex]->variants as $key => $value ) {
+										echo '<option value="' . $value . '" ' . selected( $this->fontValues->regularweight, $value, false ) . '>' . $value . '</option>';
 									}
-								}
-								if( $optionCount == 0 ) {
-									echo '<option value="">Not Available for this font</option>';
-								}
-							?>
-						</select>
-					</div>
-					<div class="customize-control-description">Select weight for <strong>bold text</strong></div>
-					<div class="weight-style">
-						<select class="google-fonts-boldweight-style">
-							<?php
-								$optionCount = 0;
-								foreach( $this->fontList[$this->fontListIndex]->variants as $key => $value ) {
-									// Only add options that aren't italic
-									if( strpos( $value, 'italic' ) === false ) {
-										echo '<option value="' . $value . '" ' . selected( $this->fontValues->boldweight, $value, false ) . '>' . $value . '</option>';
-										$optionCount++;
+								?>
+							</select>
+						</div>
+						<div class="customize-control-description">Select weight for <italic>italic text</italic></div>
+						<div class="weight-style">
+							<select class="google-fonts-italicweight-style" <?php disabled( in_array( 'italic', $this->fontList[$this->fontListIndex]->variants ), false ); ?>>
+								<?php
+									$optionCount = 0;
+									foreach( $this->fontList[$this->fontListIndex]->variants as $key => $value ) {
+										// Only add options that are italic
+										if( strpos( $value, 'italic' ) !== false ) {
+											echo '<option value="' . $value . '" ' . selected( $this->fontValues->italicweight, $value, false ) . '>' . $value . '</option>';
+											$optionCount++;
+										}
 									}
-								}
-								// This should never evaluate as there'll always be at least a 'regular' weight
-								if( $optionCount == 0 ) {
-									echo '<option value="">Not Available for this font</option>';
-								}
-							?>
-						</select>
+									if( $optionCount == 0 ) {
+										echo '<option value="">Not Available for this font</option>';
+									}
+								?>
+							</select>
+						</div>
+						<div class="customize-control-description">Select weight for <strong>bold text</strong></div>
+						<div class="weight-style">
+							<select class="google-fonts-boldweight-style">
+								<?php
+									$optionCount = 0;
+									foreach( $this->fontList[$this->fontListIndex]->variants as $key => $value ) {
+										// Only add options that aren't italic
+										if( strpos( $value, 'italic' ) === false ) {
+											echo '<option value="' . $value . '" ' . selected( $this->fontValues->boldweight, $value, false ) . '>' . $value . '</option>';
+											$optionCount++;
+										}
+									}
+									// This should never evaluate as there'll always be at least a 'regular' weight
+									if( $optionCount == 0 ) {
+										echo '<option value="">Not Available for this font</option>';
+									}
+								?>
+							</select>
+						</div>
 					</div>
+						
 					<input type="hidden" class="google-fonts-category" value="<?php echo $this->fontValues->category; ?>">
 				</div>
 				<?php
@@ -779,11 +801,18 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 * Find the index of the saved font in our multidimensional array of Google Fonts
 		 */
 		public function ltple_theme_getFontIndex( $haystack, $needle ) {
-			foreach( $haystack as $key => $value ) {
-				if( $value->family == $needle ) {
-					return $key;
+			
+			if( !empty($needle->font) ){
+			
+				foreach( $haystack as $key => $value ) {
+					
+					if( $value->family == $needle->font ) {
+						
+						return $key;
+					}
 				}
 			}
+			
 			return false;
 		}
 
@@ -791,23 +820,26 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 * Return the list of Google Fonts from our json file. Unless otherwise specfied, list will be limited to 30 fonts.
 		 */
 		public function ltple_theme_getGoogleFonts( $count = 30 ) {
+			
 			// Google Fonts json generated from https://www.googleapis.com/webfonts/v1/webfonts?sort=popularity&key=YOUR-API-KEY
-			$fontFile = $this->get_theme_resource_url() . 'js/google-fonts-alphabetical.json';
+			
+			$fontFile = get_template_directory() . '/js/google-fonts-alphabetical.json';
+			
 			if ( $this->fontOrderBy === 'popular' ) {
-				$fontFile = $this->get_theme_resource_url() . 'js/google-fonts-popularity.json';
+				
+				$fontFile = get_template_directory() . '/js/google-fonts-popularity.json';
 			}
+			
+			$json = file_get_contents( $fontFile );
 
-			$request = wp_remote_get( $fontFile );
-			if( is_wp_error( $request ) ) {
-				return "";
-			}
-
-			$body = wp_remote_retrieve_body( $request );
-			$content = json_decode( $body );
-
+			$content = json_decode( $json );
+			
 			if( $count == 'all' ) {
+				
 				return $content->items;
-			} else {
+			} 
+			else {
+				
 				return array_slice( $content->items, 0, $count );
 			}
 		}
@@ -1100,13 +1132,19 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 	 * @return integer	Sanitized value
 	 */
 	if ( ! function_exists( 'ltple_theme_radio_sanitization' ) ) {
+		
 		function ltple_theme_radio_sanitization( $input, $setting ) {
+			
 			//get the list of possible radio box or select options
-		 $choices = $setting->manager->get_control( $setting->id )->choices;
-
+			
+			$choices = $setting->manager->get_control( $setting->id )->choices;
+						
 			if ( array_key_exists( $input, $choices ) ) {
+				
 				return $input;
-			} else {
+			} 
+			else {
+				
 				return $setting->default;
 			}
 		}

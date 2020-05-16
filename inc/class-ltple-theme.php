@@ -23,6 +23,7 @@ class LTPLE_Theme {
 	var $panels 		= array();
 	var $sections 		= array();
 	var $customizers 	= array();
+	var $fonts 			= array();
 	
 	var $demo_samples	= false; 
 	var $slider_images 	= 10;
@@ -61,15 +62,17 @@ class LTPLE_Theme {
 
 		//Styles & Scripts
 	
-		add_action( 'wp_enqueue_scripts', array($this,'enqueue_fontawesome_style') );
+		add_action( 'wp_enqueue_scripts', array($this,'enqueue_fonts'),999997);
 		
-		add_action( 'customize_controls_print_styles',  array($this,'enqueue_fontawesome_style') );
-
+		add_action( 'customize_controls_print_styles', array($this,'enqueue_fonts'));
+		
+		/*
 		add_action( 'customize_preview_init', 	function(){
 			
 			wp_enqueue_script( 'ltple-customizer-preview', trailingslashit( get_template_directory_uri() ) . 'js/customizer-preview.js', array( 'customize-preview', 'jquery' ) );
 			
 		});
+		*/
 		
 		//SETUP, HEADER & FOOTER MENUS
 		
@@ -101,60 +104,143 @@ class LTPLE_Theme {
 		add_filter( 'init', array($this,'init') );		
 	
 		add_filter( 'wp_nav_menu_items', array($this,'get_searchbar_menu'), 8888, 2 );
+		
+		//DEFAULT PARENT THEME SETTINGS
+		
+		if( !is_child_theme() ){
+			
+			if( is_admin() ){
+				
+				add_action( 'admin_notices', function(){
+					
+					$theme_page_url = '#';
+
+					if( !get_option( 'triggered_welcomet') ){
+						$message = sprintf(__( 'Welcome to Live Template Editor Theme! Before diving in to your new theme, please visit the <a href="%1$s" target="_blank">theme\'s</a> page for access to dozens of tips and in-depth tutorials.', 'ltple-theme-theme' ),
+							esc_url( $theme_page_url )
+						);
+
+						printf(
+							'<div class="notice is-dismissible">
+								<p>%1$s</p>
+							</div>',
+							$message
+						);
+						add_option( 'triggered_welcomet', '1', '', 'yes' );
+					}
+				});	
+			}
+			else{
+				
+				include_once $this->dir . '/inc/class-ltple-navwalker.php';
+
+				add_action( 'wp_enqueue_scripts', function() {
+					
+					// load bootstrap css
+
+					wp_enqueue_style( 'ltple-theme-bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css' );
+
+					// load bootstrap css
+					// load AItheme styles
+					// load Live Template Editor Theme styles
+					
+					wp_enqueue_style( 'ltple-theme-style', get_stylesheet_uri(), array(), $this->_version );
+					
+					wp_enqueue_script('jquery');
+
+					// Internet Explorer HTML5 support
+					wp_enqueue_script( 'html5hiv',get_template_directory_uri().'/js/html5.js', array(), '3.7.0', false );
+					wp_script_add_data( 'html5hiv', 'conditional', 'lt IE 9' );
+
+					// load bootstrap js
+
+					wp_enqueue_script('ltple-theme-popper', get_template_directory_uri() . '/js/popper.min.js', array(), '', true );
+					wp_enqueue_script('ltple-theme-bootstrapjs', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '', true );
+					
+					wp_enqueue_script('ltple-theme-themejs', get_template_directory_uri() . '/js/theme-script.min.js', array(), $this->_version, true );
+					wp_enqueue_script( 'ltple-theme-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.min.js', array(), '20151215', true );
+
+					if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+						
+						wp_enqueue_script( 'comment-reply' );
+					}
+				});
+				
+				add_filter('nav_menu_submenu_css_class',function($classes){
+										
+					$classes[] = 'dropdown-menu-right';
+					
+					return $classes;
+				});
+
+				add_filter( 'the_password_form', function() {
+					
+					global $post;
+					
+					$label = 'pwbox-'.( empty( $post->ID ) ? rand() : $post->ID );
+					
+					$o = '<form action="' . esc_url( site_url( 'wp-login.php?action=postpass', 'login_post' ) ) . '" method="post">
+					<div class="d-block mb-3">' . __( "To view this protected post, enter the password below:", "ltple-theme" ) . '</div>
+					<div class="form-group form-inline"><label for="' . $label . '" class="mr-2">' . __( "Password:", "ltple-theme" ) . ' </label><input name="post_password" id="' . $label . '" type="password" size="20" maxlength="20" class="form-control mr-2" /> <input type="submit" name="Submit" value="' . esc_attr__( "Submit", "ltple-theme" ) . '" class="btn btn-primary"/></div>
+					</form>';
+					
+					return $o;
+				});
+			}
+			
+			include_once $this->dir . '/inc/class-ltple-custom-widgets.php';
+
+			add_action( 'widgets_init', function() {
+	
+				unregister_widget( 'WP_Widget_Recent_Posts' );
+				register_widget( 'LTPLE_Widget_Recent_Posts' );
+	
+				register_sidebar( array(
+					'name'          => esc_html__( 'Sidebar', 'ltple-theme' ),
+					'id'            => 'sidebar-1',
+					'description'   => esc_html__( 'Add widgets here.', 'ltple-theme' ),
+					'before_widget' => '<section id="%1$s" class="widget %2$s">',
+					'after_widget'  => '</section>',
+					'before_title'  => '<h3 class="widget-title">',
+					'after_title'   => '</h3>',
+				) );
+				register_sidebar( array(
+					'name'          => esc_html__( 'Footer 1', 'ltple-theme' ),
+					'id'            => 'footer-1',
+					'description'   => esc_html__( 'Add widgets here.', 'ltple-theme' ),
+					'before_widget' => '<section id="%1$s" class="widget %2$s">',
+					'after_widget'  => '</section>',
+					'before_title'  => '<h3 class="widget-title">',
+					'after_title'   => '</h3>',
+				) );
+				register_sidebar( array(
+					'name'          => esc_html__( 'Footer 2', 'ltple-theme' ),
+					'id'            => 'footer-2',
+					'description'   => esc_html__( 'Add widgets here.', 'ltple-theme' ),
+					'before_widget' => '<section id="%1$s" class="widget %2$s">',
+					'after_widget'  => '</section>',
+					'before_title'  => '<h3 class="widget-title">',
+					'after_title'   => '</h3>',
+				) );
+				register_sidebar( array(
+					'name'          => esc_html__( 'Footer 3', 'ltple-theme' ),
+					'id'            => 'footer-3',
+					'description'   => esc_html__( 'Add widgets here.', 'ltple-theme' ),
+					'before_widget' => '<section id="%1$s" class="widget %2$s">',
+					'after_widget'  => '</section>',
+					'before_title'  => '<h3 class="widget-title">',
+					'after_title'   => '</h3>',
+				) );
+			} );			
+		}
 	}
 
 	public function init(){	
 		
 		// get form
 		
-		$this->get_form();
+		$this->init_form();
 		
-		// add sibars & widgets
-		
-		register_sidebar( array(
-
-			'name' 				=> __( 'Post Sidebar', 'ltple-theme' ),
-			'id' 				=> 'post-sidebar',
-			'description' 		=> __( 'The right sidebar of the posts', 'ltple-theme' ),
-			'before_widget' 	=> '<div class="widget">',
-			'after_widget' 		=> '</div>',
-			'before_title' 		=> '<div class="widget-title"><h2>',
-			'after_title' 		=> '</h2></div>',
-		));
-		
-		register_sidebar( array(
-
-			'name' 				=> __( 'Footer Column Left', 'ltple-theme' ),
-			'id' 				=> 'footer-widget-left',
-			'description' 		=> __( 'The left column of the footer', 'ltple-theme' ),
-			'before_widget' 	=> '',
-			'after_widget' 		=> '',
-			'before_title' 		=> '<h3 class="widget-title-left">',
-			'after_title' 		=> '</h3>',
-		));
-		
-		register_sidebar( array(
-
-			'name' 				=> __( 'Footer Column Center', 'ltple-theme' ),
-			'id' 				=> 'footer-widget-center',
-			'description' 		=> __( 'The center column of the footer', 'ltple-theme' ),
-			'before_widget' 	=> '',
-			'after_widget' 		=> '',
-			'before_title' 		=> '<h3 class="widget-title-center">',
-			'after_title' 		=> '</h3>',
-		));
-		
-		register_sidebar( array(
-
-			'name' 				=> __( 'Footer Column Right', 'ltple-theme' ),
-			'id' 				=> 'footer-widget-right',
-			'description' 		=> __( 'The right column of the footer', 'ltple-theme' ),
-			'before_widget' 	=> '',
-			'after_widget' 		=> '',
-			'before_title' 		=> '<h3 class="widget-title-right">',
-			'after_title' 		=> '</h3>',
-		));
-
 		// generate header menu
 		
 		$name = 'Header Menu';
@@ -309,7 +395,7 @@ class LTPLE_Theme {
 		return $items;
 	}
 	
-	public function get_form(){
+	public function init_form(){
 		
 		include_once 'class-ltple-form.php';
 		
@@ -331,408 +417,215 @@ class LTPLE_Theme {
 			'description' 	=> 'Adjust the main theme style',
 			'priority'		=> 100,
 		));
-		
-		/*
-		$this->set_panel('header_naviation_panel', array(
-
-			'title' 		=> 'Header & Footer',
-			'description' 	=> 'Adjust your Header, Footer and Navigation sections.',
-			'priority'		=> 100,
-		));
-		*/
 
 		//set sections
 		
 		$this->set_section('main_background_section', array(
 
-			'title' 		=> 'Background',
-			'description' 	=> 'Change the main background of the theme',
+			'title' 		=> 'Page',
+			'description' 	=> 'Change the body background of the theme',
 			'panel' 		=> 'theme_style_panel',
-		));				
-		
-		/*
-		$this->set_section('social_icons_section', array(
+		));	
 
-			'title' 		=> 'Social Icons',
-			'description' 	=> 'Add your social media links and we\'ll automatically match them with the appropriate icons. Drag and drop the URLs to rearrange their order.',
-			'panel' 		=> 'header_naviation_panel',
-		));		
-		
-		$this->set_section('contact_section', array(
+		$this->set_section('titles_section', array(
 
-			'title' 		=> 'Contact',
-			'description' 	=> 'Add your phone number to the site header bar.',
-			'panel' 		=> 'header_naviation_panel',
+			'title' 		=> 'Titles',
+			'description' 	=> 'Change the style of titles and subtitles',
+			'panel' 		=> 'theme_style_panel',
 		));
 
-		$this->set_section('search_section', array(
+		$this->set_section('texts_section', array(
 
-			'title' 		=> 'Search',
-			'description' 	=> 'Add a search icon to your primary naigation menu.',
-			'panel' 		=> 'header_naviation_panel',
+			'title' 		=> 'Texts',
+			'description' 	=> 'Change the style of the texts',
+			'panel' 		=> 'theme_style_panel',
 		));
-		*/
+
+		$this->set_section('links_section', array(
+
+			'title' 		=> 'Links',
+			'description' 	=> 'Change the style of links',
+			'panel' 		=> 'theme_style_panel',
+		));			
 
 		//set customizers
 		
-		/*
-		$theme->set_customizer('ltple_call_action_bkg', array(
+		$this->set_customizer('header_logo', array(
 			
 			'setting' 	=> array(
-			
-				'default'	=> get_template_directory_uri() . '/images/la_rsvp.jpg',
+				'transport'	=> 'refresh',
+				'default'	=> '',
 			),
 			'class' 	=> 'WP_Customize_Image_Control',
 			'control'	=> array(
 			
-				'label' 	=> 'Background',
-				'section' 	=> 'home_page_call_action',
+				'label' 	=> 'Header Logo',
+				'section' 	=> 'title_tagline',
 			),
 			'partial' 	=> array(
-			
-				'render_callback' => function($option_name) {
-					
-					if( $bkg = LTPLE_Theme::get_mod($option_name) ){
-					
-						echo'<div class="'.$option_name.'">';
-						
-							echo '<img class="card-img" src="' . $bkg . '">';
-						
-						echo'</div>';
-					}
-				}
-			),
+				'selector' 		 	=> '.navbar-brand',
+				'render_callback' 	=> array($this,'render_logo'),			
+			)
 		));
-		*/
-		
-		$this->set_customizer('main_background_image', array(
 
-			'class' 	=> 'WP_Customize_Image_Control',
+		$this->set_customizer('title_color', array(
+			
+			'setting' => array(
+								
+				'default'		 	=> '#444444',
+				'transport'		 	=> 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color'
+			),
+			'class' 	=> 'WP_Customize_Color_Control',
 			'control' 	=> array(
 			
-				'label' 		=> 'Background Image',
-				'section' 		=> 'main_background_section',
+				'label' 	=> 'Titles Color',
+				'section' 	=> 'titles_section',
+				'type' 		=> 'color',
 			),
 			'partial' 	=> array(
 			
-				'render_callback' => function($option_name){
-					
-					return !empty($option_name) ? 'url(' . LTPLE_Theme::get_mod($option_name) . ')' : 'none';
-				},			
-			),
-		));		
-		
-		/*
-		$this->set_customizer('social_newtab', array(
-
-			'setting' 	=> array(
-			
-				'transport'		 	=> 'postMessage',
-				'sanitize_callback' => 'ltple_theme_switch_sanitization'
-			),
-			'class'		=> 'LTPLE_Theme_Toggle_Switch_Custom_control',
-			'control' 	=> array(
-			
-				'label' 	=> 'Open in new browser tab',
-				'section' 	=> 'social_icons_section'
-			),
-			'partial' 	=> array(
-			
-				'selector' 				=> '.social',
-				'container_inclusive' 	=> false,
-				'render_callback' 		=> function(){
-					
-					echo LTPLE_Theme::get_social_media();
-				},			
+				'render_callback' => array($this,'render_color'),			
 			),
 		));
 
-		$this->set_customizer('social_alignment', array(
+		$this->set_customizer('title_font', array(
 
-			'setting' 	=> array(
-				'default' 			=> 'alignleft',
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'ltple_theme_radio_sanitization'
-			),
-			'class'		=> 'LTPLE_Theme_Text_Radio_Button_Custom_Control',
-			'control' 	=> array(
-			
-				'label' 		=> 'Alignment',
-				'description' 	=> 'Choose the alignment for your social icons',
-				'section' 		=> 'social_icons_section',
-				'choices' 		=> array(
+			'setting' => array(
 				
-					'alignleft' 	=> 'Left',
-					'alignright' 	=> 'Right',
-				)
-			),
-			'partial' 	=> array(
-			
-				'selector' 				=> '.social',
-				'container_inclusive' 	=> false,
-				'render_callback' 		=> function() {
-					
-					echo LTPLE_Theme::get_social_media();
-				}
-			),
-		));
-		
-		$this->set_customizer('social_urls', array(
-
-			'setting' 	=> array(
-			
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'ltple_theme_url_sanitization'
-			),
-			'class'		=> 'LTPLE_Theme_Sortable_Repeater_Url_Custom_Control',
-			'control' 	=> array(
-			
-				'label' 		=> 'Social URLs',
-				'description' 	=> 'Add your social media links.',
-				'section' 		=> 'social_icons_section',
-				'button_labels' => array(
-					
-					'add' => 'Add Icon',
-				)
-			),
-			'partial' 	=> array(
-			
-				'selector' 				=> '.social',
-				'container_inclusive' 	=> false,
-				'render_callback' 		=> function() {
-					
-					echo LTPLE_Theme::get_social_media();
-				},
-			),
-		));
-		
-		$this->set_customizer('social_url_icons', array(
-
-			'setting' 	=> array(
-			
-				'transport' 		=> 'refresh',
-				'sanitize_callback' => 'ltple_theme_text_sanitization'
-			),
-			'class'		=> 'LTPLE_Theme_Single_Accordion_Custom_Control',
-			'control' 	=> array(
-			
-			'label' => __( 'View list of available icons', 'ltple-theme' ),
-				'description' => array(
-					'Behance' => __( '<i class="fab fa-behance"></i>', 'ltple-theme' ),
-					'Bitbucket' => __( '<i class="fab fa-bitbucket"></i>', 'ltple-theme' ),
-					'CodePen' => __( '<i class="fab fa-codepen"></i>', 'ltple-theme' ),
-					'DeviantArt' => __( '<i class="fab fa-deviantart"></i>', 'ltple-theme' ),
-					'Discord' => __( '<i class="fab fa-discord"></i>', 'ltple-theme' ),
-					'Dribbble' => __( '<i class="fab fa-dribbble"></i>', 'ltple-theme' ),
-					'Etsy' => __( '<i class="fab fa-etsy"></i>', 'ltple-theme' ),
-					'Facebook' => __( '<i class="fab fa-facebook-f"></i>', 'ltple-theme' ),
-					'Flickr' => __( '<i class="fab fa-flickr"></i>', 'ltple-theme' ),
-					'Foursquare' => __( '<i class="fab fa-foursquare"></i>', 'ltple-theme' ),
-					'GitHub' => __( '<i class="fab fa-github"></i>', 'ltple-theme' ),
-					'Google+' => __( '<i class="fab fa-google-plus-g"></i>', 'ltple-theme' ),
-					'Instagram' => __( '<i class="fab fa-instagram"></i>', 'ltple-theme' ),
-					'Kickstarter' => __( '<i class="fab fa-kickstarter-k"></i>', 'ltple-theme' ),
-					'Last.fm' => __( '<i class="fab fa-lastfm"></i>', 'ltple-theme' ),
-					'LinkedIn' => __( '<i class="fab fa-linkedin-in"></i>', 'ltple-theme' ),
-					'Medium' => __( '<i class="fab fa-medium-m"></i>', 'ltple-theme' ),
-					'Patreon' => __( '<i class="fab fa-patreon"></i>', 'ltple-theme' ),
-					'Pinterest' => __( '<i class="fab fa-pinterest-p"></i>', 'ltple-theme' ),
-					'Reddit' => __( '<i class="fab fa-reddit-alien"></i>', 'ltple-theme' ),
-					'Slack' => __( '<i class="fab fa-slack-hash"></i>', 'ltple-theme' ),
-					'SlideShare' => __( '<i class="fab fa-slideshare"></i>', 'ltple-theme' ),
-					'Snapchat' => __( '<i class="fab fa-snapchat-ghost"></i>', 'ltple-theme' ),
-					'SoundCloud' => __( '<i class="fab fa-soundcloud"></i>', 'ltple-theme' ),
-					'Spotify' => __( '<i class="fab fa-spotify"></i>', 'ltple-theme' ),
-					'Stack Overflow' => __( '<i class="fab fa-stack-overflow"></i>', 'ltple-theme' ),
-					'Tumblr' => __( '<i class="fab fa-tumblr"></i>', 'ltple-theme' ),
-					'Twitch' => __( '<i class="fab fa-twitch"></i>', 'ltple-theme' ),
-					'Twitter' => __( '<i class="fab fa-twitter"></i>', 'ltple-theme' ),
-					'Vimeo' => __( '<i class="fab fa-vimeo-v"></i>', 'ltple-theme' ),
-					'Weibo' => __( '<i class="fab fa-weibo"></i>', 'ltple-theme' ),
-					'YouTube' => __( '<i class="fab fa-youtube"></i>', 'ltple-theme' ),
-				),
-				'section' => 'social_icons_section'
-			),
-		));
-		
-		$this->set_customizer('social_rss', array(
-
-			'setting' 	=> array(
-			
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'ltple_theme_switch_sanitization'
-			),
-			'class' 	=> 'LTPLE_Theme_Toggle_Switch_Custom_control',
-			'control' 	=> array(
-			
-				'label' 	=> 'Display RSS icon',
-				'section' 	=> 'social_icons_section',
-			),
-			'partial' 	=> array(
-			
-				'selector' 				=> '.social',
-				'container_inclusive' 	=> false,
-				'render_callback' 		=> function() {
-					
-					echo LTPLE_Theme::get_social_media();
-				}
-			),
-		));
+				'default' => json_encode(array(
 	
-		$this->set_customizer('contact_phone', array(
-
-			'setting' 	=> array(
-				'default' 			=> '+1 234 567',
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'wp_filter_nohtml_kses'
+					'font' 			=> 'Lato',
+					'regularweight' => 'regular',
+					'italicweight' 	=> 'regular',
+					'boldweight' 	=> 'regular',
+					'category' 		=> 'sans-serif'
+				)),
+				'transport'		 	=> 'refresh',
+				'sanitize_callback' => 'ltple_theme_google_font_sanitization'
 			),
+			'class' 	=> 'LTPLE_Theme_Google_Font_Select_Custom_Control',
 			'control' 	=> array(
+			
+				'label' 		=> 'Title Font',
+				'section' 		=> 'titles_section',
+				'description'	=> '',
+				'input_attrs' 	=> array(
 				
-				'label' 	=> 'Phone number',
-				'type' 		=> 'text',
-				'section' 	=> 'contact_section'
+					'font_count' 	=> 'all',
+					'orderby' 		=> 'alpha',
+				),			
 			),
 			'partial' 	=> array(
 			
-				'selector' 				=> '.phone',
-				'container_inclusive' 	=> true,
-				'render_callback' 		=> function(){
+				'render_callback' => array($this,'render_font'),			
+			),
+		));
 		
-					if( $contact_phone 	= LTPLE_Theme::get_mod('contact_phone') ) {
-						
-						echo '<span class="phone">';
-						
-							echo '<a href="tel:'.$contact_phone.'">';
-							
-								echo '<svg class="svg-icon-phone" viewBox="0 0 20 20">';
-									
-									echo '<path d="M13.372,1.781H6.628c-0.696,0-1.265,0.569-1.265,1.265v13.91c0,0.695,0.569,1.265,1.265,1.265h6.744c0.695,0,1.265-0.569,1.265-1.265V3.045C14.637,2.35,14.067,1.781,13.372,1.781 M13.794,16.955c0,0.228-0.194,0.421-0.422,0.421H6.628c-0.228,0-0.421-0.193-0.421-0.421v-0.843h7.587V16.955z M13.794,15.269H6.207V4.731h7.587V15.269z M13.794,3.888H6.207V3.045c0-0.228,0.194-0.421,0.421-0.421h6.744c0.228,0,0.422,0.194,0.422,0.421V3.888z"></path>';
+		$this->set_customizer('text_color', array(
+			
+			'setting' => array(
 								
-								echo '</svg> ';
+				'default'		 	=> '#444444',
+				'transport'		 	=> 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color'
+			),
+			'class' 	=> 'WP_Customize_Color_Control',
+			'control' 	=> array(
+			
+				'label' 	=> 'Texts Color',
+				'section' 	=> 'texts_section',
+				'type' 		=> 'color',
+			),
+			'partial' 	=> array(
+			
+				'render_callback' => array($this,'render_color'),			
+			),
+		));
+
+		$this->set_customizer('text_font', array(
+
+			'setting' => array(
+				
+				'default' => json_encode(array(
+	
+					'font' 			=> 'Lato',
+					'regularweight' => 'regular',
+					'italicweight' 	=> 'regular',
+					'boldweight' 	=> 'regular',
+					'category' 		=> 'sans-serif'
+				)),
+				'transport'		 	=> 'refresh',
+				'sanitize_callback' => 'ltple_theme_google_font_sanitization'
+			),
+			'class' 	=> 'LTPLE_Theme_Google_Font_Select_Custom_Control',
+			'control' 	=> array(
+			
+				'label' 		=> 'Texts Font',
+				'section' 		=> 'texts_section',
+				'description'	=> '',
+				'input_attrs' 	=> array(
+				
+					'font_count' 	=> 'all',
+					'orderby' 		=> 'alpha',
+				),			
+			),
+			'partial' 	=> array(
+			
+				'render_callback' => array($this,'render_font'),			
+			),
+		));
+		
+		$this->set_customizer('link_color', array(
+			
+			'setting' => array(
 								
-								echo $contact_phone;
-							
-							echo '</a>';
-							
-						echo '</span>';
-					}	
-				}
+				'default'		 	=> '#329ef7',
+				'transport'		 	=> 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color'
 			),
-		));
-		
-		$this->set_customizer('contact_email', array(
-
-			'setting' 	=> array(
-				'default' 			=> 'manager@website.com',
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'sanitize_email'
-			),
+			'class' 	=> 'WP_Customize_Color_Control',
 			'control' 	=> array(
-				
-				'label' 	=> 'Email address',
-				'type' 		=> 'email',
-				'section' 	=> 'contact_section',
+			
+				'label' 	=> 'Link Color',
+				'section' 	=> 'links_section',
+				'type' 		=> 'color',
 			),
 			'partial' 	=> array(
 			
-				'selector' 				=> '.email',
-				'container_inclusive' 	=> true,
-				'render_callback' 		=> function(){
+				'render_callback' => array($this,'render_color'),			
+			),
+		));
 		
-					if( $contact_email 	= LTPLE_Theme::get_mod('contact_email') ) {
-						
-						?>
-						
-						<span class="email">
-							
-							<a href="mailto:<?php echo $contact_email; ?>">
-							
-								<svg class="svg-icon-email" viewBox="0 0 20 20">
-									<path d="M17.388,4.751H2.613c-0.213,0-0.389,0.175-0.389,0.389v9.72c0,0.216,0.175,0.389,0.389,0.389h14.775c0.214,0,0.389-0.173,0.389-0.389v-9.72C17.776,4.926,17.602,4.751,17.388,4.751 M16.448,5.53L10,11.984L3.552,5.53H16.448zM3.002,6.081l3.921,3.925l-3.921,3.925V6.081z M3.56,14.471l3.914-3.916l2.253,2.253c0.153,0.153,0.395,0.153,0.548,0l2.253-2.253l3.913,3.916H3.56z M16.999,13.931l-3.921-3.925l3.921-3.925V13.931z"></path>
-								</svg>
+		$this->set_customizer('link_hover_color', array(
+			
+			'setting' => array(
 								
-								<?php echo $contact_email; ?>
-							
-							</a>
-							
-						</span>
-						
-						<?php
-					}
-				}
+				'default'		 	=> '#329ef7',
+				'transport'		 	=> 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color'
 			),
-		));
-		
-		$this->set_customizer('contact_schedule', array(
-
-			'setting' 	=> array(
-				'default' 			=> 'weekdays 9AM - 10PM',
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'wp_filter_nohtml_kses'
-			),
+			'class' 	=> 'WP_Customize_Color_Control',
 			'control' 	=> array(
-				
-				'label' 	=> 'Schedule',
-				'type' 		=> 'text',
-				'section' 	=> 'contact_section'
+			
+				'label' 	=> 'Hover Color',
+				'section' 	=> 'links_section',
+				'type' 		=> 'color',
 			),
 			'partial' 	=> array(
 			
-				'selector' 				=> '.schedule',
-				'container_inclusive' 	=> true,
-				'render_callback' 		=> function(){
-		
-					if( $contact_schedule = LTPLE_Theme::get_mod('contact_schedule') ) {
-						
-						?>
-						
-						<span class="schedule">
-						
-							<svg class="svg-icon-schedule" viewBox="0 0 20 20">
-								<path d="M15.396,2.292H4.604c-0.212,0-0.385,0.174-0.385,0.386v14.646c0,0.212,0.173,0.385,0.385,0.385h10.792c0.211,0,0.385-0.173,0.385-0.385V2.677C15.781,2.465,15.607,2.292,15.396,2.292 M15.01,16.938H4.99v-2.698h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.519,1.156-1.156s-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.321-1.089,0.771H4.99v-3.083h1.609c0.156,0.449,0.586,0.771,1.089,0.771c0.638,0,1.156-0.518,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V6.531h1.609C6.755,6.98,7.185,7.302,7.688,7.302c0.638,0,1.156-0.519,1.156-1.156c0-0.638-0.519-1.156-1.156-1.156c-0.503,0-0.933,0.322-1.089,0.771H4.99V3.062h10.02V16.938z M7.302,13.854c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386s-0.173,0.385-0.385,0.385S7.302,14.066,7.302,13.854 M7.302,10c0-0.212,0.173-0.385,0.385-0.385S8.073,9.788,8.073,10s-0.173,0.385-0.385,0.385S7.302,10.212,7.302,10 M7.302,6.146c0-0.212,0.173-0.386,0.385-0.386s0.385,0.174,0.385,0.386S7.899,6.531,7.688,6.531S7.302,6.358,7.302,6.146"></path>
-							</svg>
-							
-							<?php echo $contact_schedule; ?>
-							
-						</span>
-						
-						<?php
-					}
-				}
+				'render_callback' => array($this,'render_color'),			
 			),
 		));
 		
-		$this->set_customizer('search_menu_icon', array(
-
-			'setting' 	=> array(
-				'default' 			=> 1,
-				'transport' 		=> 'postMessage',
-				'sanitize_callback' => 'ltple_theme_switch_sanitization'
-			),
-			'class'		=> 'LTPLE_Theme_Toggle_Switch_Custom_control',
-			'control' 	=> array(
-				
-				'label' 	=> 'Display Search Icon',
-				'section' 	=> 'search_section'
-			),
-			'partial' 	=> array(
-			
-				'selector' => '#menu-searchbar',
-			),
-		));
-
-		*/
-		
-		// set defaults values
-		
-		$this->get_default_mods();
+		do_action('ltple_theme_customizers',$this);
 	}
 	
-	public function get_default_mod($option_name){
+	public static function get_default_mod($option_name){
 		
 		$default = '';
 		
-		if( $defaults = $this->get_default_mods() ){
+		if( $defaults = self::get_default_mods() ){
 			
 			if( isset($defaults[$option_name]) ){
 				
@@ -743,15 +636,15 @@ class LTPLE_Theme {
 		return $default;
 	}
 	
-	public function get_default_mods(){
+	public static function get_default_mods(){
 		
-		if( is_null($this->defaults) ){
+		if( is_null(self::$_instance->defaults) ){
 			
 			$defaults = array();
 			
-			if( !empty($this->customizers) ){
+			if( !empty(self::$_instance->customizers) ){
 			
-				foreach( $this->customizers as $name => $customizer ){
+				foreach(self::$_instance->customizers as $name => $customizer ){
 					
 					if( isset($customizer['setting']['default']) ){
 						
@@ -760,10 +653,10 @@ class LTPLE_Theme {
 				}
 			}
 			
-			$this->defaults = apply_filters( 'ltple_theme_customizer_defaults', $defaults );		
+			self::$_instance->defaults = apply_filters( 'ltple_theme_customizer_defaults', $defaults );		
 		}
 		
-		return $this->defaults;
+		return self::$_instance->defaults;
 	}
 	public function set_panel($option_name,$settings){
 		
@@ -786,6 +679,16 @@ class LTPLE_Theme {
 		if(!isset($this->customizers[$option_name])){
 			
 			$this->customizers[$option_name] = $settings;
+				
+			// register fonts
+			
+			if( isset($settings['class']) && $settings['class'] == 'LTPLE_Theme_Google_Font_Select_Custom_Control' ){
+				
+				if( !isset($this->fonts[$option_name]) ){
+					
+					$this->fonts[$option_name] = json_decode(self::get_mod($option_name));
+				}
+			}
 		}
 	}
 	
@@ -879,6 +782,10 @@ class LTPLE_Theme {
 							
 							$sanitize_callback = 'esc_url_raw';
 						}
+						elseif( $customizer['control']['type'] == 'number' ){
+							
+							$sanitize_callback = 'ltple_theme_sanitize_integer';
+						}
 						else{
 							
 							var_dump('sanitize controler:  ' .$customizer['control']['type']);exit;
@@ -937,6 +844,8 @@ class LTPLE_Theme {
 					
 					$customizer['class'] = 'WP_Customize_Control';
 				}
+
+				// add controle
 				
 				$wp_customize->add_control( new $customizer['class']( $wp_customize, $customizer_name, $customizer['control']));						
 			
@@ -963,10 +872,45 @@ class LTPLE_Theme {
 		}
 	}
 	
-	public function enqueue_fontawesome_style() {
+	public function enqueue_fonts() {
+					 
+		$fonts = array();
+		
+		if( !empty($this->fonts) ){
+			
+			foreach( $this->fonts as $data ){
 
-		wp_register_style( 'fontawesome', trailingslashit( get_template_directory_uri() ) . 'css/font-awesome.css' , array(), '4.7.0', 'all' );
-		wp_enqueue_style( 'fontawesome' );
+				if( !empty($data->font) ){ 
+					
+					$font = urlencode($data->font);
+					
+					if( !in_array($font,$fonts) ){
+					
+						$fonts[] = $font;
+					}
+				}
+			}
+		}
+			
+		if( !empty($fonts) ){
+			
+			$fonts_url = 'https://fonts.googleapis.com/css2?family=' . implode($fonts,'&family=') . '&display=swap';
+			
+			// css import
+			
+			wp_register_style( 'theme-fonts', false, array());
+			wp_enqueue_style( 'theme-fonts' );
+
+			wp_add_inline_style( 'theme-fonts', "
+				
+				@import url('".$fonts_url."');
+			");
+		}	
+		
+		// webfonts
+		
+		wp_register_style( 'fontawesome-5', get_template_directory_uri() . '/css/fontawesome.min.css' );			
+		wp_enqueue_style( 'fontawesome-5' );
 	}
 	
 	public function customize_partial_render($rendered, $partial, $container_context){
@@ -984,7 +928,12 @@ class LTPLE_Theme {
 
 		return $rendered;
 	}
-	
+
+	public static function get_mod($option_name){
+
+		return get_theme_mod($option_name,self::get_default_mod($option_name));
+	}
+
 	public static function render($option_name){
 
 		if( isset(self::$_instance->customizers[$option_name]['partial']['render_callback']) ){
@@ -994,62 +943,111 @@ class LTPLE_Theme {
 			return self::$_instance->customizers[$option_name]['partial']['render_callback']($args);
 		}
 	}
-
-	public static function get_mod($option_name){
-
-		$default = false;
-		
-		if( isset(self::$_instance->defaults[$option_name]) ){
-			
-			$default = self::$_instance->defaults[$option_name];
-		}
-		
-		return get_theme_mod($option_name,$default);
+	
+	public function render_background_url($option_name){
+					
+		return !empty($option_name) ? 'url(' . LTPLE_Theme::get_mod($option_name) . ')' : 'none';
 	}
-
-	public function get_social_media() {
+	
+	public function render_background_color($option_name){
+					
+		return !empty($option_name) ? LTPLE_Theme::get_mod($option_name) : 'transparent';
+	}
+	
+	public function render_background_repeat($option_name){
 		
+		return !empty($option_name) ? LTPLE_Theme::get_mod($option_name) : 'no-repeat';
+	}
+	
+	public function render_color($option_name){
+					
+		return !empty($option_name) ? LTPLE_Theme::get_mod($option_name) : '#444444';
+	}
+	
+	public function render_font($option_name){
+		
+		if( $data = json_decode(LTPLE_Theme::get_mod($option_name)) ){
+			
+			if( empty($this->fonts[$option_name]) || $this->fonts[$option_name]->font != $data->font ){
+				
+				$fonts_url = 'https://fonts.googleapis.com/css2?family=' . urlencode($data->font) . '&display=swap';
+
+				wp_register_style($option_name, false, array());
+				wp_enqueue_style($option_name );
+
+				wp_add_inline_style($option_name, "
+					
+					@import url('".$fonts_url."');
+				");
+			}
+			
+			$font = "'" . $data->font . "'";
+			
+			if( !empty($data->category) && $data->category == 'serif' || $data->category == 'sans-serif' ){
+				
+				$font .= ', ' . $data->category;
+			}
+			
+			return $font;
+		}
+
+		return 'inherit';
+	}
+	
+	public function render_logo($option_name){
+		
+		$logo = '';
+		
+		if( $url = LTPLE_Theme::get_mod($option_name) ){
+			
+			$logo = '<img src="' . esc_url($url) . '" alt="'.esc_attr( get_bloginfo( 'name' ) ) .'">';
+		}
+
+		return $logo;
+	}
+	
+	public function render_social_icons($option_name){
+
 		$output 		= array();
 
-		$social_urls 		= explode( ',', LTPLE_Theme::get_mod('social_urls') );
-		$social_newtab 		= LTPLE_Theme::get_mod('social_newtab');
+		$social_urls 	= explode( ',', LTPLE_Theme::get_mod($option_name) );
 
 		if( !empty($social_urls) ){
 			
 			$social_icons 	= apply_filters( 'ltple_theme_social_icons', array(
 			
-				array( 'url' => 'behance.net', 'icon' => 'fab fa-behance', 'title' => esc_html__( 'Follow me on Behance', 'ltple-theme' ), 'class' => 'behance' ),
-				array( 'url' => 'bitbucket.org', 'icon' => 'fab fa-bitbucket', 'title' => esc_html__( 'Fork me on Bitbucket', 'ltple-theme' ), 'class' => 'bitbucket' ),
-				array( 'url' => 'codepen.io', 'icon' => 'fab fa-codepen', 'title' => esc_html__( 'Follow me on CodePen', 'ltple-theme' ), 'class' => 'codepen' ),
-				array( 'url' => 'deviantart.com', 'icon' => 'fab fa-deviantart', 'title' => esc_html__( 'Watch me on DeviantArt', 'ltple-theme' ), 'class' => 'deviantart' ),
-				array( 'url' => 'discord.gg', 'icon' => 'fab fa-discord', 'title' => esc_html__( 'Join me on Discord', 'ltple-theme' ), 'class' => 'discord' ),
-				array( 'url' => 'dribbble.com', 'icon' => 'fab fa-dribbble', 'title' => esc_html__( 'Follow me on Dribbble', 'ltple-theme' ), 'class' => 'dribbble' ),
-				array( 'url' => 'etsy.com', 'icon' => 'fab fa-etsy', 'title' => esc_html__( 'favorite me on Etsy', 'ltple-theme' ), 'class' => 'etsy' ),
-				array( 'url' => 'facebook.com', 'icon' => 'fab fa-facebook-f', 'title' => esc_html__( 'Like me on Facebook', 'ltple-theme' ), 'class' => 'facebook' ),
-				array( 'url' => 'flickr.com', 'icon' => 'fab fa-flickr', 'title' => esc_html__( 'Connect with me on Flickr', 'ltple-theme' ), 'class' => 'flickr' ),
-				array( 'url' => 'foursquare.com', 'icon' => 'fab fa-foursquare', 'title' => esc_html__( 'Follow me on Foursquare', 'ltple-theme' ), 'class' => 'foursquare' ),
-				array( 'url' => 'github.com', 'icon' => 'fab fa-github', 'title' => esc_html__( 'Fork me on GitHub', 'ltple-theme' ), 'class' => 'github' ),
-				array( 'url' => 'instagram.com', 'icon' => 'fab fa-instagram', 'title' => esc_html__( 'Follow me on Instagram', 'ltple-theme' ), 'class' => 'instagram' ),
-				array( 'url' => 'kickstarter.com', 'icon' => 'fab fa-kickstarter-k', 'title' => esc_html__( 'Back me on Kickstarter', 'ltple-theme' ), 'class' => 'kickstarter' ),
-				array( 'url' => 'last.fm', 'icon' => 'fab fa-lastfm', 'title' => esc_html__( 'Follow me on Last.fm', 'ltple-theme' ), 'class' => 'lastfm' ),
-				array( 'url' => 'linkedin.com', 'icon' => 'fab fa-linkedin-in', 'title' => esc_html__( 'Connect with me on LinkedIn', 'ltple-theme' ), 'class' => 'linkedin' ),
-				array( 'url' => 'medium.com', 'icon' => 'fab fa-medium-m', 'title' => esc_html__( 'Follow me on Medium', 'ltple-theme' ), 'class' => 'medium' ),
-				array( 'url' => 'patreon.com', 'icon' => 'fab fa-patreon', 'title' => esc_html__( 'Support me on Patreon', 'ltple-theme' ), 'class' => 'patreon' ),
-				array( 'url' => 'pinterest.com', 'icon' => 'fab fa-pinterest-p', 'title' => esc_html__( 'Follow me on Pinterest', 'ltple-theme' ), 'class' => 'pinterest' ),
-				array( 'url' => 'plus.google.com', 'icon' => 'fab fa-google-plus-g', 'title' => esc_html__( 'Connect with me on Google+', 'ltple-theme' ), 'class' => 'googleplus' ),
-				array( 'url' => 'reddit.com', 'icon' => 'fab fa-reddit-alien', 'title' => esc_html__( 'Join me on Reddit', 'ltple-theme' ), 'class' => 'reddit' ),
-				array( 'url' => 'slack.com', 'icon' => 'fab fa-slack-hash', 'title' => esc_html__( 'Join me on Slack', 'ltple-theme' ), 'class' => 'slack.' ),
-				array( 'url' => 'slideshare.net', 'icon' => 'fab fa-slideshare', 'title' => esc_html__( 'Follow me on SlideShare', 'ltple-theme' ), 'class' => 'slideshare' ),
-				array( 'url' => 'snapchat.com', 'icon' => 'fab fa-snapchat-ghost', 'title' => esc_html__( 'Add me on Snapchat', 'ltple-theme' ), 'class' => 'snapchat' ),
-				array( 'url' => 'soundcloud.com', 'icon' => 'fab fa-soundcloud', 'title' => esc_html__( 'Follow me on SoundCloud', 'ltple-theme' ), 'class' => 'soundcloud' ),
-				array( 'url' => 'spotify.com', 'icon' => 'fab fa-spotify', 'title' => esc_html__( 'Follow me on Spotify', 'ltple-theme' ), 'class' => 'spotify' ),
-				array( 'url' => 'stackoverflow.com', 'icon' => 'fab fa-stack-overflow', 'title' => esc_html__( 'Join me on Stack Overflow', 'ltple-theme' ), 'class' => 'stackoverflow' ),
-				array( 'url' => 'tumblr.com', 'icon' => 'fab fa-tumblr', 'title' => esc_html__( 'Follow me on Tumblr', 'ltple-theme' ), 'class' => 'tumblr' ),
-				array( 'url' => 'twitch.tv', 'icon' => 'fab fa-twitch', 'title' => esc_html__( 'Follow me on Twitch', 'ltple-theme' ), 'class' => 'twitch' ),
-				array( 'url' => 'twitter.com', 'icon' => 'fab fa-twitter', 'title' => esc_html__( 'Follow me on Twitter', 'ltple-theme' ), 'class' => 'twitter' ),
-				array( 'url' => 'vimeo.com', 'icon' => 'fab fa-vimeo-v', 'title' => esc_html__( 'Follow me on Vimeo', 'ltple-theme' ), 'class' => 'vimeo' ),
-				array( 'url' => 'weibo.com', 'icon' => 'fab fa-weibo', 'title' => esc_html__( 'Follow me on weibo', 'ltple-theme' ), 'class' => 'weibo' ),
-				array( 'url' => 'youtube.com', 'icon' => 'fab fa-youtube', 'title' => esc_html__( 'Subscribe to me on YouTube', 'ltple-theme' ), 'class' => 'youtube' ),
+				array( 'url' => 'behance.net', 'icon' => 'fab fa-behance', 'title' => esc_html__( 'Follow us on Behance', 'ltple-theme' ), 'class' => 'behance' ),
+				array( 'url' => 'bitbucket.org', 'icon' => 'fab fa-bitbucket', 'title' => esc_html__( 'Fork us on Bitbucket', 'ltple-theme' ), 'class' => 'bitbucket' ),
+				array( 'url' => 'codepen.io', 'icon' => 'fab fa-codepen', 'title' => esc_html__( 'Follow us on CodePen', 'ltple-theme' ), 'class' => 'codepen' ),
+				array( 'url' => 'deviantart.com', 'icon' => 'fab fa-deviantart', 'title' => esc_html__( 'Watch us on DeviantArt', 'ltple-theme' ), 'class' => 'deviantart' ),
+				array( 'url' => 'discord.gg', 'icon' => 'fab fa-discord', 'title' => esc_html__( 'Join us on Discord', 'ltple-theme' ), 'class' => 'discord' ),
+				array( 'url' => 'dribbble.com', 'icon' => 'fab fa-dribbble', 'title' => esc_html__( 'Follow us on Dribbble', 'ltple-theme' ), 'class' => 'dribbble' ),
+				array( 'url' => 'etsy.com', 'icon' => 'fab fa-etsy', 'title' => esc_html__( 'Favorite us on Etsy', 'ltple-theme' ), 'class' => 'etsy' ),
+				array( 'url' => 'facebook.com', 'icon' => 'fab fa-facebook-f', 'title' => esc_html__( 'Contact us on Facebook', 'ltple-theme' ), 'class' => 'facebook' ),
+				array( 'url' => 'flickr.com', 'icon' => 'fab fa-flickr', 'title' => esc_html__( 'Connect with us on Flickr', 'ltple-theme' ), 'class' => 'flickr' ),
+				array( 'url' => 'foursquare.com', 'icon' => 'fab fa-foursquare', 'title' => esc_html__( 'Follow us on Foursquare', 'ltple-theme' ), 'class' => 'foursquare' ),
+				array( 'url' => 'github.com', 'icon' => 'fab fa-github', 'title' => esc_html__( 'Fork us on GitHub', 'ltple-theme' ), 'class' => 'github' ),
+				array( 'url' => 'instagram.com', 'icon' => 'fab fa-instagram', 'title' => esc_html__( 'Follow us on Instagram', 'ltple-theme' ), 'class' => 'instagram' ),
+				array( 'url' => 'kickstarter.com', 'icon' => 'fab fa-kickstarter-k', 'title' => esc_html__( 'Back us on Kickstarter', 'ltple-theme' ), 'class' => 'kickstarter' ),
+				array( 'url' => 'last.fm', 'icon' => 'fab fa-lastfm', 'title' => esc_html__( 'Follow us on Last.fm', 'ltple-theme' ), 'class' => 'lastfm' ),
+				array( 'url' => 'linkedin.com', 'icon' => 'fab fa-linkedin-in', 'title' => esc_html__( 'Connect with us on LinkedIn', 'ltple-theme' ), 'class' => 'linkedin' ),
+				array( 'url' => 'medium.com', 'icon' => 'fab fa-medium-m', 'title' => esc_html__( 'Follow us on Medium', 'ltple-theme' ), 'class' => 'medium' ),
+				array( 'url' => 'patreon.com', 'icon' => 'fab fa-patreon', 'title' => esc_html__( 'Support us on Patreon', 'ltple-theme' ), 'class' => 'patreon' ),
+				array( 'url' => 'pinterest.com', 'icon' => 'fab fa-pinterest-p', 'title' => esc_html__( 'Follow us on Pinterest', 'ltple-theme' ), 'class' => 'pinterest' ),
+				array( 'url' => 'reddit.com', 'icon' => 'fab fa-reddit-alien', 'title' => esc_html__( 'Join us on Reddit', 'ltple-theme' ), 'class' => 'reddit' ),
+				array( 'url' => 'slack.com', 'icon' => 'fab fa-slack-hash', 'title' => esc_html__( 'Join us on Slack', 'ltple-theme' ), 'class' => 'slack.' ),
+				array( 'url' => 'slideshare.net', 'icon' => 'fab fa-slideshare', 'title' => esc_html__( 'Follow us on SlideShare', 'ltple-theme' ), 'class' => 'slideshare' ),
+				array( 'url' => 'snapchat.com', 'icon' => 'fab fa-snapchat-ghost', 'title' => esc_html__( 'Add us on Snapchat', 'ltple-theme' ), 'class' => 'snapchat' ),
+				array( 'url' => 'soundcloud.com', 'icon' => 'fab fa-soundcloud', 'title' => esc_html__( 'Follow us on SoundCloud', 'ltple-theme' ), 'class' => 'soundcloud' ),
+				array( 'url' => 'spotify.com', 'icon' => 'fab fa-spotify', 'title' => esc_html__( 'Follow us on Spotify', 'ltple-theme' ), 'class' => 'spotify' ),
+				array( 'url' => 'stackoverflow.com', 'icon' => 'fab fa-stack-overflow', 'title' => esc_html__( 'Join us on Stack Overflow', 'ltple-theme' ), 'class' => 'stackoverflow' ),
+				array( 'url' => 'tumblr.com', 'icon' => 'fab fa-tumblr', 'title' => esc_html__( 'Follow us on Tumblr', 'ltple-theme' ), 'class' => 'tumblr' ),
+				array( 'url' => 'twitch.tv', 'icon' => 'fab fa-twitch', 'title' => esc_html__( 'Follow us on Twitch', 'ltple-theme' ), 'class' => 'twitch' ),
+				array( 'url' => 'twitter.com', 'icon' => 'fab fa-twitter', 'title' => esc_html__( 'Follow us on Twitter', 'ltple-theme' ), 'class' => 'twitter' ),
+				array( 'url' => 'vimeo.com', 'icon' => 'fab fa-vimeo-v', 'title' => esc_html__( 'Follow us on Vimeo', 'ltple-theme' ), 'class' => 'vimeo' ),
+				array( 'url' => 'weibo.com', 'icon' => 'fab fa-weibo', 'title' => esc_html__( 'Follow us on weibo', 'ltple-theme' ), 'class' => 'weibo' ),
+				array( 'url' => 'youtube.com', 'icon' => 'fab fa-youtube', 'title' => esc_html__( 'Subscribe to us on YouTube', 'ltple-theme' ), 'class' => 'youtube' ),
+				array( 'url' => 'wa.me', 'icon' => 'fab fa-whatsapp', 'title' => esc_html__( 'Contact us on Whatsapp', 'ltple-theme' ), 'class' => 'whatsapp' ),
 			));
 					
 			foreach( $social_urls as $key => $value ) {
@@ -1062,21 +1060,21 @@ class LTPLE_Theme {
 					
 					if( false !== $index ) {
 						
-						$output[] = sprintf( '<li class="%1$s list-inline-item"><a href="%2$s" title="%3$s"%4$s><i class="%5$s"></i></a></li>',
+						$output[] = sprintf( '<li class="%1$s nav-item"><a class="nav-link" href="%2$s" title="%3$s"%4$s><i class="%5$s"></i></a></li>',
 							
 							$social_icons[$index]['class'],
 							esc_url( $value ),
 							$social_icons[$index]['title'],
-							( !$social_newtab ? '' : ' target="_blank"' ),
+							' target="_blank"',
 							$social_icons[$index]['icon']
 						);
 					}
 					else {
 						
-						$output[] = sprintf( '<li class="nosocial list-inline-item"><a href="%2$s"%3$s><i class="%4$s"></i></a></li>',
+						$output[] = sprintf( '<li class="nav-item"><a class="nav-link" href="%2$s"%3$s><i class="%4$s"></i></a></li>',
 							$social_icons[$index]['class'],
 							esc_url( $value ),
-							( !$social_newtab ? '' : ' target="_blank"' ),
+							' target="_blank"',
 							'fas fa-globe'
 						);
 					}
@@ -1084,29 +1082,22 @@ class LTPLE_Theme {
 			}
 		}
 
-		if( LTPLE_Theme::get_mod('social_rss') ) {
-			
-			$output[] = sprintf( '<li class="%1$s list-inline-item"><a href="%2$s" title="%3$s"%4$s><i class="%5$s"></i></a></li>',
-				'rss',
-				home_url( '/feed' ),
-				'Subscribe to my RSS feed',
-				( !$social_newtab ? '' : ' target="_blank"' ),
-				'fas fa-rss'
-			);
-		}
-
-		if ( !empty( $output ) ) {
-			
-			$social_alignment 	= LTPLE_Theme::get_mod( 'social_alignment');
-			
-			$output = apply_filters( 'ltple_theme_social_icons_list', $output );
-			
-			array_unshift( $output, '<div class="social"><ul class="social-icons list-inline studio-social ' . $social_alignment . '">' );
-			
-			$output[] = '</ul></div>';
-		}
-
 		return implode( '', $output );
+	}
+	
+	public function render_attachment_url($option_name){
+		
+		$att = LTPLE_Theme::get_mod($option_name);
+		
+		if( is_numeric($att) ){
+			
+			if( $url = wp_get_attachment_url($att) ){
+			
+				return esc_url($url);
+			}
+		}
+		
+		return $att;
 	}
 
 	public static function instance( $file = '', $settings = array() ) {
