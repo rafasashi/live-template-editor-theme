@@ -624,6 +624,11 @@ class LTPLE_Theme {
 	public static function get_default_mod($option_name){
 		
 		$default = '';
+
+		if( !empty(self::$_instance->customizers[$option_name]) && isset(self::$_instance->customizers[$option_name]['setting']['default']) ){
+			
+			$default = self::$_instance->customizers[$option_name]['setting']['default'];
+		}
 		
 		if( $defaults = self::get_default_mods() ){
 			
@@ -909,7 +914,7 @@ class LTPLE_Theme {
 		
 		// webfonts
 		
-		wp_register_style( 'fontawesome-5', get_template_directory_uri() . '/css/fontawesome.min.css' );			
+		wp_register_style( 'fontawesome-5', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css' );			
 		wp_enqueue_style( 'fontawesome-5' );
 	}
 	
@@ -945,22 +950,43 @@ class LTPLE_Theme {
 	}
 	
 	public function render_background_url($option_name){
-					
-		return !empty($option_name) ? 'url(' . LTPLE_Theme::get_mod($option_name) . ')' : 'none';
+		
+		$background_url = 'none';
+		
+		if( $url = LTPLE_Theme::get_mod($option_name) ){
+			
+			$background_url = 'url(' . $url . ')';
+		}
+		
+		return $background_url;
 	}
 	
 	public function render_background_color($option_name){
-					
-		return !empty($option_name) ? LTPLE_Theme::get_mod($option_name) : 'transparent';
+		
+		$background_color = 'transparent';
+		
+		if( $color = LTPLE_Theme::get_mod($option_name) ){
+			
+			$background_color = $color;
+		}
+		
+		return $background_color;
 	}
 	
 	public function render_background_repeat($option_name){
 		
-		return !empty($option_name) ? LTPLE_Theme::get_mod($option_name) : 'no-repeat';
+		$background_repeat = 'no-repeat';
+		
+		if( $repeat = LTPLE_Theme::get_mod($option_name) ){
+			
+			$background_repeat = $repeat;
+		}
+		
+		return $background_repeat;
 	}
 	
 	public function render_color($option_name){
-					
+		
 		return !empty($option_name) ? LTPLE_Theme::get_mod($option_name) : '#444444';
 	}
 	
